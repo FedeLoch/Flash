@@ -1,15 +1,14 @@
 Class {
-	#name : #BaselineOfFlash,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfFlash
+	#name : 'BaselineOfFlash',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfFlash',
+	#package : 'BaselineOfFlash'
 }
 
-{
-	#category : #baselines
-}
-BaselineOfFlash >> baseline: spec
+{ #category : 'baselines' }
+BaselineOfFlash >> baseline: spec [
 	<baseline>
-	spec for: #common do: [
+	spec for: #common do: [ 
 		spec
 			baseline: 'Coypu'
 			with: [ spec repository: 'github://lucretiomsp/coypu:master' ].
@@ -30,4 +29,6 @@ BaselineOfFlash >> baseline: spec
 			group: 'effects' with: #('Flash-Effects');
 			group: 'themes' with: #('Flash-Themes');
 			group: 'tests' with: #('Flash-Tests-Core' 'Flash-Tests-Events' 'Flash-Tests-Effects' 'Flash-Tests-Themes' 'Flash-Tests-Integration');
-			group: 'all' with: #('default' 'tests') ]
+			group: 'all' with: #('default' 'tests')
+			]
+]
