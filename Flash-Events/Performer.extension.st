@@ -1,9 +1,3 @@
-Class {
-	#name : #Performer,
-	#superclass : #Object,
-	#category : #'Flash-Events'
-}
-
 {
 	#category : #'*Flash-Events'
 }

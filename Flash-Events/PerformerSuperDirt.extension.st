@@ -1,9 +1,3 @@
-Class {
-	#name : #PerformerSuperDirt,
-	#superclass : #Performer,
-	#category : #'Flash-Events'
-}
-
 {
 	#category : #'*Flash-Events'
 }

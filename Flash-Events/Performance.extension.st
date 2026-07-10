@@ -1,9 +1,3 @@
-Class {
-	#name : #Performance,
-	#superclass : #Dictionary,
-	#category : #'Flash-Events'
-}
-
 {
 	#category : #'*Flash-Events'
 }
