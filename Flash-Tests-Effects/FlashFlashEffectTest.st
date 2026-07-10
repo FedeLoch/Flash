@@ -7,7 +7,7 @@ Class {
 {
 	#category : #tests
 }
-FlashFlashEffectTest >> testApplyChangesBackgroundColor
+FlashFlashEffectTest >> testApplyChangesBackgroundColor [
 	| effect target event |
 	target := BlElement new size: 100@100.
 	event := FlashMelodyEvent new velocity: 0.8; yourself.
@@ -15,20 +15,23 @@ FlashFlashEffectTest >> testApplyChangesBackgroundColor
 	effect applyTo: target withEvent: event.
 	self assert: effect animation isNotNil
 
+]
 {
 	#category : #tests
 }
-FlashFlashEffectTest >> testFlashColorDerivedFromEffectColor
+FlashFlashEffectTest >> testFlashColorDerivedFromEffectColor [
 	| effect flashColor |
 	effect := FlashFlashEffect new color: (Color fromHexString: '00FF41'); intensity: 0.6.
 	flashColor := effect flashColor.
 	self assert: (flashColor red closeTo: (Color fromHexString: '00FF41') red).
 	self assert: (flashColor alpha closeTo: 0.6)
 
+]
 {
 	#category : #tests
 }
-FlashFlashEffectTest >> testFlashDurationIsShort
+FlashFlashEffectTest >> testFlashDurationIsShort [
 	| effect |
 	effect := FlashFlashEffect new.
 	self assert: effect duration <= 500 milliSeconds
+]

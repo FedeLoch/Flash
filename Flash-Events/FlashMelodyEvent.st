@@ -20,7 +20,7 @@ Class {
 {
 	#category : #'instance creation'
 }
-FlashMelodyEvent class >> fromSequencer: aSequencer at: anIndex
+FlashMelodyEvent class >> fromSequencer: aSequencer at: anIndex [
 	^ self new
 		sequencerKey: aSequencer seqKey;
 		noteValue: (aSequencer notes at: (anIndex min: aSequencer notes size) max: 1);
@@ -31,152 +31,176 @@ FlashMelodyEvent class >> fromSequencer: aSequencer at: anIndex
 		timestamp: DateAndTime now;
 		yourself
 
+]
 {
 	#category : #'private utilities'
 }
-FlashMelodyEvent class >> extractSoundNameFrom: aSequencer
+FlashMelodyEvent class >> extractSoundNameFrom: aSequencer [
 	| message |
 	message := aSequencer dirtMessage.
 	message ifNil: [ ^ 'unknown' ].
 	^ (message at: 's' ifAbsent: [
 		message at: #s ifAbsent: [ ^ 'unknown' ] ]) asString
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> sequencerKey
+FlashMelodyEvent >> sequencerKey [
 	^ sequencerKey
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> sequencerKey: anObject
+FlashMelodyEvent >> sequencerKey: anObject [
 	sequencerKey := anObject
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> soundName
+FlashMelodyEvent >> soundName [
 	^ soundName
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> soundName: aString
+FlashMelodyEvent >> soundName: aString [
 	soundName := aString
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> noteValue
+FlashMelodyEvent >> noteValue [
 	^ noteValue
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> noteValue: anInteger
+FlashMelodyEvent >> noteValue: anInteger [
 	noteValue := anInteger
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> velocity
+FlashMelodyEvent >> velocity [
 	^ velocity
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> velocity: aFloat
+FlashMelodyEvent >> velocity: aFloat [
 	velocity := aFloat
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> channel
+FlashMelodyEvent >> channel [
 	^ channel
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> channel: anInteger
+FlashMelodyEvent >> channel: anInteger [
 	channel := anInteger
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> orbit
+FlashMelodyEvent >> orbit [
 	^ orbit
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> orbit: anInteger
+FlashMelodyEvent >> orbit: anInteger [
 	orbit := anInteger
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> duration
+FlashMelodyEvent >> duration [
 	^ duration
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> duration: aFloat
+FlashMelodyEvent >> duration: aFloat [
 	duration := aFloat
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> gateValue
+FlashMelodyEvent >> gateValue [
 	^ gateValue
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> gateValue: anInteger
+FlashMelodyEvent >> gateValue: anInteger [
 	gateValue := anInteger
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> extraParams
+FlashMelodyEvent >> extraParams [
 	^ extraParams
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> extraParams: aDictionary
+FlashMelodyEvent >> extraParams: aDictionary [
 	extraParams := aDictionary
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> timestamp
+FlashMelodyEvent >> timestamp [
 	^ timestamp
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> timestamp: aDateAndTime
+FlashMelodyEvent >> timestamp: aDateAndTime [
 	timestamp := aDateAndTime
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> performer
+FlashMelodyEvent >> performer [
 	^ performer
 
+]
 {
 	#category : #accessing
 }
-FlashMelodyEvent >> performer: aPerformer
+FlashMelodyEvent >> performer: aPerformer [
 	performer := aPerformer
 
+]
 {
 	#category : #classification
 }
-FlashMelodyEvent >> soundCategory
+FlashMelodyEvent >> soundCategory [
 	| name |
 	name := soundName ifNil: [ ^ #sample ].
 	(#('bd' 'kick' 'sn' 'snare' 'hh' 'hihat' 'cp' 'clap' 'rim' 'tom' 'crash' 'ride' 'cymbal') includes: name)
@@ -191,28 +215,33 @@ FlashMelodyEvent >> soundCategory
 		ifTrue: [ ^ #fx ].
 	^ #sample
 
+]
 {
 	#category : #classification
 }
-FlashMelodyEvent >> isPercussive
+FlashMelodyEvent >> isPercussive [
 	^ self soundCategory = #drum
 
+]
 {
 	#category : #classification
 }
-FlashMelodyEvent >> normalizedPitch
+FlashMelodyEvent >> normalizedPitch [
 	noteValue ifNil: [ ^ 0.5 ].
 	^ (noteValue max: 0 min: 127) / 127.0
 
+]
 {
 	#category : #classification
 }
-FlashMelodyEvent >> hasEffect: aSymbol
+FlashMelodyEvent >> hasEffect: aSymbol [
 	^ extraParams isNotNil and: [ extraParams includesKey: aSymbol ]
 
+]
 {
 	#category : #testing
 }
-FlashMelodyEvent >> forceSoundCategory: aSymbol
+FlashMelodyEvent >> forceSoundCategory: aSymbol [
 	"Used for testing — forces a specific sound category."
 	soundName := aSymbol asString
+]

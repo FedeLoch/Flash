@@ -7,25 +7,27 @@ Class {
 {
 	#category : #initialization
 }
-FlashWaveEffect >> initialize
+FlashWaveEffect >> initialize [
 	super initialize.
 	duration := 400 milliSeconds.
 	intensity := 0.5
 
+]
 {
 	#category : #api
 }
-FlashWaveEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent
+FlashWaveEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent [
 	targetElement := aBlElement.
 	self intensity: (aFlashMelodyEvent velocity ifNil: [ 0.5 ]).
 	targetElement beInSeparateCompositionLayer.
 	self buildAnimation.
 	animation start
 
+]
 {
 	#category : #animation
 }
-FlashWaveEffect >> buildAnimation
+FlashWaveEffect >> buildAnimation [
 	| displacement |
 	displacement := self displacement.
 	animation := BlSequentialAnimation new
@@ -43,8 +45,10 @@ FlashWaveEffect >> buildAnimation
 			duration: duration / 3);
 		yourself
 
+]
 {
 	#category : #accessing
 }
-FlashWaveEffect >> displacement
+FlashWaveEffect >> displacement [
 	^ (intensity * 8) asInteger max: 1
+]

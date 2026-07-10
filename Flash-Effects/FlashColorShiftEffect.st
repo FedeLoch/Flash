@@ -10,53 +10,59 @@ Class {
 {
 	#category : #initialization
 }
-FlashColorShiftEffect >> initialize
+FlashColorShiftEffect >> initialize [
 	super initialize.
 	duration := 300 milliSeconds.
 	color := Color cyan.
 	originalColor := Color white
 
+]
 {
 	#category : #accessing
 }
-FlashColorShiftEffect >> originalColor
+FlashColorShiftEffect >> originalColor [
 	^ originalColor
 
+]
 {
 	#category : #accessing
 }
-FlashColorShiftEffect >> originalColor: aColor
+FlashColorShiftEffect >> originalColor: aColor [
 	originalColor := aColor
 
+]
 {
 	#category : #accessing
 }
-FlashColorShiftEffect >> shiftColor
+FlashColorShiftEffect >> shiftColor [
 	^ Color
 		r: (originalColor red + ((color red - originalColor red) * intensity))
 		g: (originalColor green + ((color green - originalColor green) * intensity))
 		b: (originalColor blue + ((color blue - originalColor blue) * intensity))
 		alpha: 1.0
 
+]
 {
 	#category : #accessing
 }
-FlashColorShiftEffect >> restoreColor
+FlashColorShiftEffect >> restoreColor [
 	^ originalColor
 
+]
 {
 	#category : #api
 }
-FlashColorShiftEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent
+FlashColorShiftEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent [
 	targetElement := aBlElement.
 	self intensity: (aFlashMelodyEvent velocity ifNil: [ 0.5 ]).
 	self buildAnimation.
 	animation start
 
+]
 {
 	#category : #animation
 }
-FlashColorShiftEffect >> buildAnimation
+FlashColorShiftEffect >> buildAnimation [
 	| shift |
 	shift := self shiftColor.
 	animation := BlColorTransition new
@@ -68,9 +74,11 @@ FlashColorShiftEffect >> buildAnimation
 				targetElement background: c ] ];
 		yourself
 
+]
 {
 	#category : #api
 }
-FlashColorShiftEffect >> stop
+FlashColorShiftEffect >> stop [
 	super stop.
 	targetElement ifNotNil: [ targetElement background: originalColor ]
+]

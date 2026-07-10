@@ -7,24 +7,26 @@ Class {
 {
 	#category : #initialization
 }
-FlashBorderFlashEffect >> initialize
+FlashBorderFlashEffect >> initialize [
 	super initialize.
 	duration := 250 milliSeconds.
 	intensity := 0.5
 
+]
 {
 	#category : #api
 }
-FlashBorderFlashEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent
+FlashBorderFlashEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent [
 	targetElement := aBlElement.
 	self intensity: (aFlashMelodyEvent velocity ifNil: [ 0.5 ]).
 	self buildAnimation.
 	animation start
 
+]
 {
 	#category : #animation
 }
-FlashBorderFlashEffect >> buildAnimation
+FlashBorderFlashEffect >> buildAnimation [
 	| startBorder endBorder |
 	startBorder := BlBorder builder
 		width: self borderWidth;
@@ -40,8 +42,10 @@ FlashBorderFlashEffect >> buildAnimation
 				build) ];
 		yourself
 
+]
 {
 	#category : #accessing
 }
-FlashBorderFlashEffect >> borderWidth
+FlashBorderFlashEffect >> borderWidth [
 	^ (intensity * 4) asFloat max: 1.0
+]

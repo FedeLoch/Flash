@@ -7,7 +7,7 @@ Class {
 {
 	#category : #tests
 }
-FlashMelodyEventTest >> testCreationWithBasicProperties
+FlashMelodyEventTest >> testCreationWithBasicProperties [
 	| event |
 	event := FlashMelodyEvent new
 		sequencerKey: #kick;
@@ -24,10 +24,11 @@ FlashMelodyEventTest >> testCreationWithBasicProperties
 	self assert: event channel equals: 1.
 	self assert: event orbit equals: 0
 
+]
 {
 	#category : #tests
 }
-FlashMelodyEventTest >> testSoundCategoryForDrumSounds
+FlashMelodyEventTest >> testSoundCategoryForDrumSounds [
 	| event |
 	event := FlashMelodyEvent new soundName: 'bd'.
 	self assert: event soundCategory equals: #drum.
@@ -38,48 +39,53 @@ FlashMelodyEventTest >> testSoundCategoryForDrumSounds
 	event soundName: 'cp'.
 	self assert: event soundCategory equals: #drum
 
+]
 {
 	#category : #tests
 }
-FlashMelodyEventTest >> testSoundCategoryForBassSounds
+FlashMelodyEventTest >> testSoundCategoryForBassSounds [
 	| event |
 	event := FlashMelodyEvent new soundName: 'bass'.
 	self assert: event soundCategory equals: #bass.
 	event soundName: 'bass1'.
 	self assert: event soundCategory equals: #bass
 
+]
 {
 	#category : #tests
 }
-FlashMelodyEventTest >> testSoundCategoryForSynthSounds
+FlashMelodyEventTest >> testSoundCategoryForSynthSounds [
 	| event |
 	event := FlashMelodyEvent new soundName: 'superpiano'.
 	self assert: event soundCategory equals: #lead.
 	event soundName: 'supersquare'.
 	self assert: event soundCategory equals: #lead
 
+]
 {
 	#category : #tests
 }
-FlashMelodyEventTest >> testSoundCategoryDefaultsToSample
+FlashMelodyEventTest >> testSoundCategoryDefaultsToSample [
 	| event |
 	event := FlashMelodyEvent new soundName: 'myCustomSound'.
 	self assert: event soundCategory equals: #sample
 
+]
 {
 	#category : #tests
 }
-FlashMelodyEventTest >> testIsPercussive
+FlashMelodyEventTest >> testIsPercussive [
 	| event |
 	event := FlashMelodyEvent new soundName: 'bd'.
 	self assert: event isPercussive.
 	event soundName: 'superpiano'.
 	self deny: event isPercussive
 
+]
 {
 	#category : #tests
 }
-FlashMelodyEventTest >> testNormalizedPitch
+FlashMelodyEventTest >> testNormalizedPitch [
 	| event |
 	event := FlashMelodyEvent new noteValue: 0.
 	self assert: event normalizedPitch equals: 0.0.
@@ -88,19 +94,21 @@ FlashMelodyEventTest >> testNormalizedPitch
 	event noteValue: 60.
 	self assert: (event normalizedPitch closeTo: 60/127)
 
+]
 {
 	#category : #tests
 }
-FlashMelodyEventTest >> testHasEffect
+FlashMelodyEventTest >> testHasEffect [
 	| event |
 	event := FlashMelodyEvent new extraParams: (Dictionary new at: #delay put: 0.5; yourself).
 	self assert: (event hasEffect: #delay).
 	self deny: (event hasEffect: #reverb)
 
+]
 {
 	#category : #tests
 }
-FlashMelodyEventTest >> testFromSequencerFactory
+FlashMelodyEventTest >> testFromSequencerFactory [
 	| seq event |
 	seq := SequencerMono new.
 	seq seqKey: #testSeq.
@@ -111,3 +119,4 @@ FlashMelodyEventTest >> testFromSequencerFactory
 	event := FlashMelodyEvent fromSequencer: seq at: 0.
 	self assert: event sequencerKey equals: #testSeq.
 	self assert: event noteValue equals: 60
+]

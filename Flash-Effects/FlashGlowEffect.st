@@ -7,24 +7,26 @@ Class {
 {
 	#category : #initialization
 }
-FlashGlowEffect >> initialize
+FlashGlowEffect >> initialize [
 	super initialize.
 	duration := 400 milliSeconds.
 	intensity := 0.3
 
+]
 {
 	#category : #api
 }
-FlashGlowEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent
+FlashGlowEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent [
 	targetElement := aBlElement.
 	self intensity: (aFlashMelodyEvent velocity ifNil: [ 0.3 ]).
 	self buildAnimation.
 	animation start
 
+]
 {
 	#category : #animation
 }
-FlashGlowEffect >> buildAnimation
+FlashGlowEffect >> buildAnimation [
 	| startBorder endBorder |
 	startBorder := BlBorder builder
 		width: (2 * intensity) asFloat;
@@ -39,8 +41,10 @@ FlashGlowEffect >> buildAnimation
 			targetElement border: (BlBorder builder width: 2; paint: currentColor; build) ];
 		yourself
 
+]
 {
 	#category : #color
 }
-FlashGlowEffect >> glowColor
+FlashGlowEffect >> glowColor [
 	^ color alpha: intensity
+]

@@ -17,7 +17,7 @@ Class {
 {
 	#category : #initialization
 }
-FlashLiveEditor >> initialize
+FlashLiveEditor >> initialize [
 	super initialize.
 	self layout: BlFrameLayout new.
 	self size: 600 @ 400.
@@ -32,10 +32,11 @@ FlashLiveEditor >> initialize
 	self initializeCodeEvaluator.
 	self initializeCompletionController
 
+]
 {
 	#category : #initialization
 }
-FlashLiveEditor >> initializeEditor
+FlashLiveEditor >> initializeEditor [
 	editor := AlbEditor new.
 	editor constraintsDo: [ :c |
 		c horizontal matchParent.
@@ -45,10 +46,11 @@ FlashLiveEditor >> initializeEditor
 		c vertical matchParent ].
 	self addChild: editor
 
+]
 {
 	#category : #initialization
 }
-FlashLiveEditor >> initializeEffectLayer
+FlashLiveEditor >> initializeEffectLayer [
 	effectLayer := BlElement new.
 	effectLayer background: Color transparent.
 	effectLayer constraintsDo: [ :c |
@@ -57,150 +59,173 @@ FlashLiveEditor >> initializeEffectLayer
 	effectLayer mouseTransparent: true.
 	self addChild: effectLayer
 
+]
 {
 	#category : #initialization
 }
-FlashLiveEditor >> initializeEventListener
+FlashLiveEditor >> initializeEventListener [
 	eventListener := FlashEditorEventListener new.
 	eventListener onMelodyEvent: [ :event | self handleMelodyEvent: event ]
 
+]
 {
 	#category : #initialization
 }
-FlashLiveEditor >> initializeCodeEvaluator
+FlashLiveEditor >> initializeCodeEvaluator [
 	codeEvaluator := FlashEditorCodeEvaluator new
 		editor: self;
 		context: codeContext;
 		yourself
 
+]
 {
 	#category : #initialization
 }
-FlashLiveEditor >> initializeCompletionController
+FlashLiveEditor >> initializeCompletionController [
 	completionController := FlashEditorCompletionController new editor: self
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> editor
+FlashLiveEditor >> editor [
 	^ editor
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> effectLayer
+FlashLiveEditor >> effectLayer [
 	^ effectLayer
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> effectTheme
+FlashLiveEditor >> effectTheme [
 	^ effectTheme
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> effectTheme: aFlashEffectTheme
+FlashLiveEditor >> effectTheme: aFlashEffectTheme [
 	effectTheme := aFlashEffectTheme.
 	effectTheme applyToEditor: self
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> eventListener
+FlashLiveEditor >> eventListener [
 	^ eventListener
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> activeEffects
+FlashLiveEditor >> activeEffects [
 	^ activeEffects
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> codeContext
+FlashLiveEditor >> codeContext [
 	^ codeContext
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> codeContext: anObject
+FlashLiveEditor >> codeContext: anObject [
 	codeContext := anObject.
 	codeEvaluator context: anObject
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> codeEvaluator
+FlashLiveEditor >> codeEvaluator [
 	^ codeEvaluator
 
+]
 {
 	#category : #accessing
 }
-FlashLiveEditor >> completionController
+FlashLiveEditor >> completionController [
 	^ completionController
 
+]
 {
 	#category : #'event handling'
 }
-FlashLiveEditor >> handleMelodyEvent: aFlashMelodyEvent
+FlashLiveEditor >> handleMelodyEvent: aFlashMelodyEvent [
 	effectTheme ifNil: [ ^ self ].
 	effectTheme effectForEvent: aFlashMelodyEvent ifConfigured: [ :effect |
 		effect applyTo: self withEvent: aFlashMelodyEvent.
 		activeEffects add: effect.
 		self cleanupFinishedEffects ]
 
+]
 {
 	#category : #'event handling'
 }
-FlashLiveEditor >> cleanupFinishedEffects
+FlashLiveEditor >> cleanupFinishedEffects [
 	activeEffects copy do: [ :effect |
 		effect isFinished ifTrue: [ activeEffects remove: effect ] ]
 
+]
 {
 	#category : #'event handling'
 }
-FlashLiveEditor >> onOpenedInSpace
+FlashLiveEditor >> onOpenedInSpace [
 	super onOpenedInSpace.
 	eventListener startListening
 
+]
 {
 	#category : #'event handling'
 }
-FlashLiveEditor >> onClosedInSpace
+FlashLiveEditor >> onClosedInSpace [
 	super onClosedInSpace.
 	eventListener stopListening.
 	activeEffects do: [ :each | each stop ].
 	activeEffects removeAll
 
+]
 {
 	#category : #evaluation
 }
-FlashLiveEditor >> doIt
+FlashLiveEditor >> doIt [
 	codeEvaluator evaluateSelection
 
+]
 {
 	#category : #evaluation
 }
-FlashLiveEditor >> printIt
+FlashLiveEditor >> printIt [
 	codeEvaluator printSelection
 
+]
 {
 	#category : #evaluation
 }
-FlashLiveEditor >> inspectIt
+FlashLiveEditor >> inspectIt [
 	codeEvaluator inspectSelection
 
+]
 {
 	#category : #evaluation
 }
-FlashLiveEditor >> debugIt
+FlashLiveEditor >> debugIt [
 	codeEvaluator debugSelection
 
+]
 {
 	#category : #'connecting'
 }
-FlashLiveEditor >> connectToPerformance: aPerformance
+FlashLiveEditor >> connectToPerformance: aPerformance [
 	eventListener performance: aPerformance.
 	eventListener startListening
+]

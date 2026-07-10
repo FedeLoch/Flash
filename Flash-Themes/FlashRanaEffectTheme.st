@@ -7,7 +7,7 @@ Class {
 {
 	#category : #initialization
 }
-FlashRanaEffectTheme >> initialize
+FlashRanaEffectTheme >> initialize [
 	super initialize.
 	name := 'Rana'.
 	backgroundColor := Color black.
@@ -15,10 +15,11 @@ FlashRanaEffectTheme >> initialize
 	self initializeMappings.
 	self initializeAccentColors
 
+]
 {
 	#category : #initialization
 }
-FlashRanaEffectTheme >> initializeMappings
+FlashRanaEffectTheme >> initializeMappings [
 	mappings at: #drum put: {
 		#effectClass -> FlashFlashEffect.
 		#config -> { #color -> (Color fromHexString: '00FF41'). #intensity -> 0.9 }
@@ -52,10 +53,11 @@ FlashRanaEffectTheme >> initializeMappings
 		#config -> { #color -> Color white. #intensity -> 0.5 }
 	} asDictionary.
 
+]
 {
 	#category : #initialization
 }
-FlashRanaEffectTheme >> initializeAccentColors
+FlashRanaEffectTheme >> initializeAccentColors [
 	accentColors at: #drum put: (Color fromHexString: '00FF41').
 	accentColors at: #snare put: (Color fromHexString: 'FFB000').
 	accentColors at: #hihat put: (Color fromHexString: '39FF14').
@@ -64,3 +66,4 @@ FlashRanaEffectTheme >> initializeAccentColors
 	accentColors at: #pad put: (Color fromHexString: '33FF33').
 	accentColors at: #fx put: Color white.
 	accentColors at: #sample put: Color white
+]

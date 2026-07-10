@@ -7,7 +7,7 @@ Class {
 {
 	#category : #tests
 }
-FlashWaveEffectTest >> testApplyCreatesSequentialAnimation
+FlashWaveEffectTest >> testApplyCreatesSequentialAnimation [
 	| effect target event |
 	target := BlElement new size: 200@50.
 	event := FlashMelodyEvent new velocity: 0.7; yourself.
@@ -15,11 +15,13 @@ FlashWaveEffectTest >> testApplyCreatesSequentialAnimation
 	effect applyTo: target withEvent: event.
 	self assert: effect animation isNotNil
 
+]
 {
 	#category : #tests
 }
-FlashWaveEffectTest >> testWaveDisplacementProportionalToIntensity
+FlashWaveEffectTest >> testWaveDisplacementProportionalToIntensity [
 	| effectLow effectHigh |
 	effectLow := FlashWaveEffect new intensity: 0.2.
 	effectHigh := FlashWaveEffect new intensity: 1.0.
 	self assert: effectHigh displacement > effectLow displacement
+]

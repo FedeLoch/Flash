@@ -7,19 +7,21 @@ Class {
 {
 	#category : #tests
 }
-FlashCoypuIntegrationTest >> testPerformerRespondsToAnnouncePlayOf
+FlashCoypuIntegrationTest >> testPerformerRespondsToAnnouncePlayOf [
 	self assert: (Performer canUnderstand: #announcePlayOf:at:)
 
+]
 {
 	#category : #tests
 }
-FlashCoypuIntegrationTest >> testPerformanceRespondsToOpenLiveEditor
+FlashCoypuIntegrationTest >> testPerformanceRespondsToOpenLiveEditor [
 	self assert: (Performance canUnderstand: #openLiveEditor)
 
+]
 {
 	#category : #tests
 }
-FlashCoypuIntegrationTest >> testAnnouncePlayOfCreatesValidEvent
+FlashCoypuIntegrationTest >> testAnnouncePlayOfCreatesValidEvent [
 	| seq received |
 	received := nil.
 	FlashEditorEventListener globalAnnouncer
@@ -35,10 +37,11 @@ FlashCoypuIntegrationTest >> testAnnouncePlayOfCreatesValidEvent
 	self assert: received sequencerKey equals: #testIntegration.
 	FlashEditorEventListener globalAnnouncer unsubscribe: self
 
+]
 {
 	#category : #tests
 }
-FlashCoypuIntegrationTest >> testEditorConnectsToPerformance
+FlashCoypuIntegrationTest >> testEditorConnectsToPerformance [
 	| editor perf |
 	editor := FlashLiveEditor new.
 	perf := Performance uniqueInstance.
@@ -46,3 +49,4 @@ FlashCoypuIntegrationTest >> testEditorConnectsToPerformance
 	self assert: editor eventListener isNotNil.
 	self assert: editor eventListener isListening.
 	editor eventListener stopListening
+]

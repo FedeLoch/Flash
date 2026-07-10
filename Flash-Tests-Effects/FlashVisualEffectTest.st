@@ -7,16 +7,17 @@ Class {
 {
 	#category : #tests
 }
-FlashVisualEffectTest >> testDefaultDuration
+FlashVisualEffectTest >> testDefaultDuration [
 	| effect |
 	effect := FlashFlashEffect new.
 	self assert: effect duration isNotNil.
 	self assert: effect duration > 0 asDuration
 
+]
 {
 	#category : #tests
 }
-FlashVisualEffectTest >> testSetIntensity
+FlashVisualEffectTest >> testSetIntensity [
 	| effect |
 	effect := FlashFlashEffect new.
 	effect intensity: 0.5.
@@ -26,19 +27,22 @@ FlashVisualEffectTest >> testSetIntensity
 	effect intensity: -0.3.
 	self assert: effect intensity equals: 0.0
 
+]
 {
 	#category : #tests
 }
-FlashVisualEffectTest >> testStopMarksEffectAsFinished
+FlashVisualEffectTest >> testStopMarksEffectAsFinished [
 	| effect |
 	effect := FlashFlashEffect new.
 	effect stop.
 	self assert: effect isFinished
 
+]
 {
 	#category : #tests
 }
-FlashVisualEffectTest >> testAllSubclassesRespondToApply
+FlashVisualEffectTest >> testAllSubclassesRespondToApply [
 	FlashVisualEffect allSubclasses do: [ :cls |
 		cls isAbstract ifFalse: [
 			self assert: (cls canUnderstand: #applyTo:withEvent:) ] ]
+]

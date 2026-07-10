@@ -7,34 +7,37 @@ Class {
 {
 	#category : #tests
 }
-FlashEditorEventListenerTest >> testGlobalAnnouncerIsSingleton
+FlashEditorEventListenerTest >> testGlobalAnnouncerIsSingleton [
 	self assert: FlashEditorEventListener globalAnnouncer
 		identicalTo: FlashEditorEventListener globalAnnouncer
 
+]
 {
 	#category : #tests
 }
-FlashEditorEventListenerTest >> testStartListeningSetsFlag
+FlashEditorEventListenerTest >> testStartListeningSetsFlag [
 	| listener |
 	listener := FlashEditorEventListener new.
 	listener startListening.
 	self assert: listener isListening.
 	listener stopListening
 
+]
 {
 	#category : #tests
 }
-FlashEditorEventListenerTest >> testStopListeningClearsFlag
+FlashEditorEventListenerTest >> testStopListeningClearsFlag [
 	| listener |
 	listener := FlashEditorEventListener new.
 	listener startListening.
 	listener stopListening.
 	self deny: listener isListening
 
+]
 {
 	#category : #tests
 }
-FlashEditorEventListenerTest >> testOnMelodyEventReceivesAnnouncement
+FlashEditorEventListenerTest >> testOnMelodyEventReceivesAnnouncement [
 	| listener received event |
 	listener := FlashEditorEventListener new.
 	received := nil.
@@ -45,10 +48,11 @@ FlashEditorEventListenerTest >> testOnMelodyEventReceivesAnnouncement
 	self assert: received soundName equals: 'bd'.
 	listener stopListening
 
+]
 {
 	#category : #tests
 }
-FlashEditorEventListenerTest >> testMultipleSubscribersAllReceiveEvents
+FlashEditorEventListenerTest >> testMultipleSubscribersAllReceiveEvents [
 	| listener received1 received2 event |
 	listener := FlashEditorEventListener new.
 	received1 := nil. received2 := nil.
@@ -59,3 +63,4 @@ FlashEditorEventListenerTest >> testMultipleSubscribersAllReceiveEvents
 	self assert: received1 isNotNil.
 	self assert: received2 isNotNil.
 	listener stopListening
+]

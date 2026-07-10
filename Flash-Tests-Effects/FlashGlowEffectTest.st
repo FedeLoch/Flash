@@ -7,7 +7,7 @@ Class {
 {
 	#category : #tests
 }
-FlashGlowEffectTest >> testApplyAddsBorderToTarget
+FlashGlowEffectTest >> testApplyAddsBorderToTarget [
 	| effect target event |
 	target := BlElement new size: 100@100.
 	event := FlashMelodyEvent new velocity: 0.5; yourself.
@@ -15,11 +15,13 @@ FlashGlowEffectTest >> testApplyAddsBorderToTarget
 	effect applyTo: target withEvent: event.
 	self assert: effect animation isNotNil
 
+]
 {
 	#category : #tests
 }
-FlashGlowEffectTest >> testGlowDurationIsLongerThanFlash
+FlashGlowEffectTest >> testGlowDurationIsLongerThanFlash [
 	| glow flash |
 	glow := FlashGlowEffect new.
 	flash := FlashFlashEffect new.
 	self assert: glow duration >= flash duration
+]

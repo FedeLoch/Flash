@@ -7,7 +7,7 @@ Class {
 {
 	#category : #tests
 }
-FlashEffectThemeTest >> testEffectForEventReturnsEffectInstance
+FlashEffectThemeTest >> testEffectForEventReturnsEffectInstance [
 	| theme event effect |
 	theme := FlashRanaEffectTheme new.
 	event := FlashMelodyEvent new soundName: 'bd'; yourself.
@@ -15,10 +15,11 @@ FlashEffectThemeTest >> testEffectForEventReturnsEffectInstance
 	self assert: effect isNotNil.
 	self assert: (effect isKindOf: FlashVisualEffect)
 
+]
 {
 	#category : #tests
 }
-FlashEffectThemeTest >> testEffectForUnknownSoundReturnsFallback
+FlashEffectThemeTest >> testEffectForUnknownSoundReturnsFallback [
 	| theme event effect |
 	theme := FlashRanaEffectTheme new.
 	event := FlashMelodyEvent new soundName: 'totallyUnknownXYZ'; yourself.
@@ -26,20 +27,22 @@ FlashEffectThemeTest >> testEffectForUnknownSoundReturnsFallback
 	self assert: effect isNotNil.
 	self assert: (effect isKindOf: FlashVisualEffect)
 
+]
 {
 	#category : #tests
 }
-FlashEffectThemeTest >> testColorForEventReturnsColor
+FlashEffectThemeTest >> testColorForEventReturnsColor [
 	| theme event color |
 	theme := FlashRanaEffectTheme new.
 	event := FlashMelodyEvent new soundName: 'bd'; yourself.
 	color := theme colorForEvent: event.
 	self assert: (color isKindOf: Color)
 
+]
 {
 	#category : #tests
 }
-FlashEffectThemeTest >> testAllThemeSubclassesHaveAName
+FlashEffectThemeTest >> testAllThemeSubclassesHaveAName [
 	FlashEffectTheme allSubclasses do: [ :cls |
 		cls isAbstract ifFalse: [
 			| theme |
@@ -47,12 +50,14 @@ FlashEffectThemeTest >> testAllThemeSubclassesHaveAName
 			self assert: theme name isNotNil.
 			self deny: theme name isEmpty ] ]
 
+]
 {
 	#category : #tests
 }
-FlashEffectThemeTest >> testAllThemeSubclassesHaveBackgroundColor
+FlashEffectThemeTest >> testAllThemeSubclassesHaveBackgroundColor [
 	FlashEffectTheme allSubclasses do: [ :cls |
 		cls isAbstract ifFalse: [
 			| theme |
 			theme := cls new.
 			self assert: (theme backgroundColor isKindOf: Color) ] ]
+]

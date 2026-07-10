@@ -14,7 +14,7 @@ Class {
 {
 	#category : #initialization
 }
-FlashThemeEditorElement >> initialize
+FlashThemeEditorElement >> initialize [
 	super initialize.
 	self layout: BlLinearLayout vertical.
 	self size: 600 @ 500.
@@ -25,10 +25,11 @@ FlashThemeEditorElement >> initialize
 	self initializeMappingEditor.
 	self initializePreviewArea
 
+]
 {
 	#category : #initialization
 }
-FlashThemeEditorElement >> initializeThemeList
+FlashThemeEditorElement >> initializeThemeList [
 	themeList := BlElement new
 		size: 600 @ 150;
 		background: Color veryDarkGray;
@@ -36,10 +37,11 @@ FlashThemeEditorElement >> initializeThemeList
 		yourself.
 	self addChild: themeList
 
+]
 {
 	#category : #initialization
 }
-FlashThemeEditorElement >> initializeMappingEditor
+FlashThemeEditorElement >> initializeMappingEditor [
 	mappingEditor := BlElement new
 		size: 600 @ 200;
 		background: Color darkGray;
@@ -47,10 +49,11 @@ FlashThemeEditorElement >> initializeMappingEditor
 		yourself.
 	self addChild: mappingEditor
 
+]
 {
 	#category : #initialization
 }
-FlashThemeEditorElement >> initializePreviewArea
+FlashThemeEditorElement >> initializePreviewArea [
 	previewArea := BlElement new
 		size: 600 @ 100;
 		background: Color black;
@@ -58,65 +61,75 @@ FlashThemeEditorElement >> initializePreviewArea
 		yourself.
 	self addChild: previewArea
 
+]
 {
 	#category : #accessing
 }
-FlashThemeEditorElement >> themeList
+FlashThemeEditorElement >> themeList [
 	^ themeList
 
+]
 {
 	#category : #accessing
 }
-FlashThemeEditorElement >> mappingEditor
+FlashThemeEditorElement >> mappingEditor [
 	^ mappingEditor
 
+]
 {
 	#category : #accessing
 }
-FlashThemeEditorElement >> previewArea
+FlashThemeEditorElement >> previewArea [
 	^ previewArea
 
+]
 {
 	#category : #accessing
 }
-FlashThemeEditorElement >> currentTheme
+FlashThemeEditorElement >> currentTheme [
 	^ currentTheme
 
+]
 {
 	#category : #accessing
 }
-FlashThemeEditorElement >> currentTheme: aFlashEffectTheme
+FlashThemeEditorElement >> currentTheme: aFlashEffectTheme [
 	currentTheme := aFlashEffectTheme
 
+]
 {
 	#category : #accessing
 }
-FlashThemeEditorElement >> editor
+FlashThemeEditorElement >> editor [
 	^ editor
 
+]
 {
 	#category : #accessing
 }
-FlashThemeEditorElement >> editor: aFlashLiveEditor
+FlashThemeEditorElement >> editor: aFlashLiveEditor [
 	editor := aFlashLiveEditor
 
+]
 {
 	#category : #api
 }
-FlashThemeEditorElement >> availableThemes
+FlashThemeEditorElement >> availableThemes [
 	^ FlashEffectTheme allSubclasses select: [ :cls | cls isAbstract not ]
 
+]
 {
 	#category : #api
 }
-FlashThemeEditorElement >> selectTheme: aFlashEffectTheme
+FlashThemeEditorElement >> selectTheme: aFlashEffectTheme [
 	currentTheme := aFlashEffectTheme.
 	editor ifNotNil: [ editor effectTheme: aFlashEffectTheme ]
 
+]
 {
 	#category : #api
 }
-FlashThemeEditorElement >> previewEffectForCategory: aSymbol
+FlashThemeEditorElement >> previewEffectForCategory: aSymbol [
 	| event effect |
 	currentTheme ifNil: [ ^ self ].
 	event := FlashMelodyEvent new
@@ -126,3 +139,4 @@ FlashThemeEditorElement >> previewEffectForCategory: aSymbol
 	effect := currentTheme effectForEvent: event.
 	effect ifNotNil: [
 		effect applyTo: previewArea withEvent: event ]
+]

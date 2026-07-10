@@ -12,44 +12,50 @@ Class {
 {
 	#category : #initialization
 }
-FlashEditorCompletionController >> initialize
+FlashEditorCompletionController >> initialize [
 	super initialize.
 	completionEngine := CompletionEngine new
 
+]
 {
 	#category : #accessing
 }
-FlashEditorCompletionController >> editor
+FlashEditorCompletionController >> editor [
 	^ editor
 
+]
 {
 	#category : #accessing
 }
-FlashEditorCompletionController >> editor: aFlashLiveEditor
+FlashEditorCompletionController >> editor: aFlashLiveEditor [
 	editor := aFlashLiveEditor
 
+]
 {
 	#category : #accessing
 }
-FlashEditorCompletionController >> popupElement
+FlashEditorCompletionController >> popupElement [
 	^ popupElement
 
+]
 {
 	#category : #accessing
 }
-FlashEditorCompletionController >> completionEngine
+FlashEditorCompletionController >> completionEngine [
 	^ completionEngine
 
+]
 {
 	#category : #popup
 }
-FlashEditorCompletionController >> isPopupVisible
+FlashEditorCompletionController >> isPopupVisible [
 	^ popupElement isNotNil and: [ popupElement space isNotNil ]
 
+]
 {
 	#category : #completion
 }
-FlashEditorCompletionController >> suggestionsForSource: aString atPosition: anInteger
+FlashEditorCompletionController >> suggestionsForSource: aString atPosition: anInteger [
 	| ast completionContext entries |
 	[ ast := completionEngine parse: aString class: Object ]
 		on: Error
@@ -61,16 +67,18 @@ FlashEditorCompletionController >> suggestionsForSource: aString atPosition: anI
 	entries := completionContext entries.
 	^ entries collect: [ :each | each contents ]
 
+]
 {
 	#category : #completion
 }
-FlashEditorCompletionController >> canAcceptSuggestion: aSuggestion forPartial: aPartialString
+FlashEditorCompletionController >> canAcceptSuggestion: aSuggestion forPartial: aPartialString [
 	^ aSuggestion beginsWith: aPartialString
 
+]
 {
 	#category : #popup
 }
-FlashEditorCompletionController >> triggerCompletionAt: cursorPosition
+FlashEditorCompletionController >> triggerCompletionAt: cursorPosition [
 	| text suggestions |
 	editor ifNil: [ ^ self ].
 	text := editor editor text asString.
@@ -78,10 +86,11 @@ FlashEditorCompletionController >> triggerCompletionAt: cursorPosition
 	suggestions ifEmpty: [ ^ self ].
 	self showPopup: suggestions at: cursorPosition
 
+]
 {
 	#category : #popup
 }
-FlashEditorCompletionController >> showPopup: suggestions at: position
+FlashEditorCompletionController >> showPopup: suggestions at: position [
 	self dismiss.
 	popupElement := BlElement new
 		size: 200 @ (suggestions size * 20 min: 200);
@@ -90,16 +99,19 @@ FlashEditorCompletionController >> showPopup: suggestions at: position
 		yourself.
 	editor ifNotNil: [ editor addChild: popupElement ]
 
+]
 {
 	#category : #popup
 }
-FlashEditorCompletionController >> acceptSelected
+FlashEditorCompletionController >> acceptSelected [
 	self dismiss
 
+]
 {
 	#category : #popup
 }
-FlashEditorCompletionController >> dismiss
+FlashEditorCompletionController >> dismiss [
 	popupElement ifNotNil: [
 		popupElement removeFromParent.
 		popupElement := nil ]
+]

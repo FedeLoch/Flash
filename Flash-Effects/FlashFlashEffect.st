@@ -7,23 +7,25 @@ Class {
 {
 	#category : #initialization
 }
-FlashFlashEffect >> initialize
+FlashFlashEffect >> initialize [
 	super initialize.
 	duration := 200 milliSeconds
 
+]
 {
 	#category : #api
 }
-FlashFlashEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent
+FlashFlashEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent [
 	targetElement := aBlElement.
 	self intensity: (aFlashMelodyEvent velocity ifNil: [ 0.5 ]).
 	self buildAnimation.
 	animation start
 
+]
 {
 	#category : #animation
 }
-FlashFlashEffect >> buildAnimation
+FlashFlashEffect >> buildAnimation [
 	| startColor endColor |
 	startColor := self flashColor.
 	endColor := Color transparent.
@@ -34,8 +36,10 @@ FlashFlashEffect >> buildAnimation
 		onStepDo: [ :c | targetElement background: c ];
 		yourself
 
+]
 {
 	#category : #color
 }
-FlashFlashEffect >> flashColor
+FlashFlashEffect >> flashColor [
 	^ color alpha: intensity
+]

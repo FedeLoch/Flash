@@ -7,33 +7,36 @@ Class {
 {
 	#category : #tests
 }
-FlashLiveEditorTest >> testInitializationCreatesAlbEditor
+FlashLiveEditorTest >> testInitializationCreatesAlbEditor [
 	| liveEditor |
 	liveEditor := FlashLiveEditor new.
 	self assert: liveEditor editor isNotNil.
 	self assert: (liveEditor editor isKindOf: AlbEditor)
 
+]
 {
 	#category : #tests
 }
-FlashLiveEditorTest >> testInitializationCreatesEffectLayer
+FlashLiveEditorTest >> testInitializationCreatesEffectLayer [
 	| liveEditor |
 	liveEditor := FlashLiveEditor new.
 	self assert: liveEditor effectLayer isNotNil.
 	self assert: (liveEditor effectLayer isKindOf: BlElement)
 
+]
 {
 	#category : #tests
 }
-FlashLiveEditorTest >> testActiveEffectsStartsEmpty
+FlashLiveEditorTest >> testActiveEffectsStartsEmpty [
 	| liveEditor |
 	liveEditor := FlashLiveEditor new.
 	self assert: liveEditor activeEffects isEmpty
 
+]
 {
 	#category : #tests
 }
-FlashLiveEditorTest >> testSetEffectTheme
+FlashLiveEditorTest >> testSetEffectTheme [
 	| liveEditor theme |
 	liveEditor := FlashLiveEditor new.
 	theme := FlashRanaEffectTheme new.
@@ -41,10 +44,11 @@ FlashLiveEditorTest >> testSetEffectTheme
 	self assert: liveEditor effectTheme equals: theme.
 	self assert: liveEditor background paint color equals: Color black
 
+]
 {
 	#category : #tests
 }
-FlashLiveEditorTest >> testHandleMelodyEventTriggersEffect
+FlashLiveEditorTest >> testHandleMelodyEventTriggersEffect [
 	| liveEditor theme event |
 	liveEditor := FlashLiveEditor new.
 	theme := FlashRanaEffectTheme new.
@@ -53,10 +57,11 @@ FlashLiveEditorTest >> testHandleMelodyEventTriggersEffect
 	liveEditor handleMelodyEvent: event.
 	self deny: liveEditor activeEffects isEmpty
 
+]
 {
 	#category : #tests
 }
-FlashLiveEditorTest >> testCleanupRemovesFinishedEffects
+FlashLiveEditorTest >> testCleanupRemovesFinishedEffects [
 	| liveEditor effect |
 	liveEditor := FlashLiveEditor new.
 	effect := FlashFlashEffect new.
@@ -65,11 +70,13 @@ FlashLiveEditorTest >> testCleanupRemovesFinishedEffects
 	liveEditor cleanupFinishedEffects.
 	self assert: liveEditor activeEffects isEmpty
 
+]
 {
 	#category : #tests
 }
-FlashLiveEditorTest >> testEditorHasChildElements
+FlashLiveEditorTest >> testEditorHasChildElements [
 	| liveEditor |
 	liveEditor := FlashLiveEditor new.
 	self assert: (liveEditor children includes: liveEditor editor).
 	self assert: (liveEditor children includes: liveEditor effectLayer)
+]
