@@ -27,8 +27,20 @@ FlashEffectTheme >> accentColors: aDictionary [
 
 { #category : 'api' }
 FlashEffectTheme >> applyToEditor: aFlashLiveEditor [
+
 	aFlashLiveEditor background: backgroundColor.
-	aFlashLiveEditor editor background: backgroundColor
+	aFlashLiveEditor editor background: backgroundColor.
+	textColor ifNotNil: [
+		| text |
+		text := aFlashLiveEditor editor text.
+		text isEmpty
+			ifTrue: [
+				text := String new asRopedText.
+				text foreground: textColor.
+				aFlashLiveEditor editor text: text
+			]
+			ifFalse: [ text foreground: textColor ]
+	]
 ]
 
 { #category : 'accessing' }
