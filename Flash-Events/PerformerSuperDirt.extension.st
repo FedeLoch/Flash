@@ -1,3 +1,5 @@
+Extension { #name : 'PerformerSuperDirt' }
+
 {
 	#category : #'*Flash-Events'
 }

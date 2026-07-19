@@ -1,3 +1,5 @@
+Extension { #name : 'Performance' }
+
 {
 	#category : #'*Flash-Events'
 }
