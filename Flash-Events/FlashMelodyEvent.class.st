@@ -1,6 +1,6 @@
 Class {
-	#name : #FlashMelodyEvent,
-	#superclass : #Announcement,
+	#name : 'FlashMelodyEvent',
+	#superclass : 'Announcement',
 	#instVars : [
 		'sequencerKey',
 		'soundName',
@@ -15,12 +15,21 @@ Class {
 		'performer',
 		'forcedCategory'
 	],
-	#category : #'Flash-Events'
+	#category : 'Flash-Events',
+	#package : 'Flash-Events'
 }
 
-{
-	#category : #'instance creation'
-}
+{ #category : 'private utilities' }
+FlashMelodyEvent class >> extractSoundNameFrom: aSequencer [
+	| message |
+	message := aSequencer dirtMessage.
+	message ifNil: [ ^ 'unknown' ].
+	^ (message at: 's' ifAbsent: [
+		message at: #s ifAbsent: [ ^ 'unknown' ] ]) asString
+
+]
+
+{ #category : 'instance creation' }
 FlashMelodyEvent class >> fromSequencer: aSequencer at: anIndex [
 	^ self new
 		sequencerKey: aSequencer seqKey;
@@ -33,174 +42,129 @@ FlashMelodyEvent class >> fromSequencer: aSequencer at: anIndex [
 		yourself
 
 ]
-{
-	#category : #'private utilities'
-}
-FlashMelodyEvent class >> extractSoundNameFrom: aSequencer [
-	| message |
-	message := aSequencer dirtMessage.
-	message ifNil: [ ^ 'unknown' ].
-	^ (message at: 's' ifAbsent: [
-		message at: #s ifAbsent: [ ^ 'unknown' ] ]) asString
 
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> sequencerKey [
-	^ sequencerKey
-
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> sequencerKey: anObject [
-	sequencerKey := anObject
-
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> soundName [
-	^ soundName
-
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> soundName: aString [
-	soundName := aString
-
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> noteValue [
-	^ noteValue
-
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> noteValue: anInteger [
-	noteValue := anInteger
-
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> velocity [
-	^ velocity
-
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> velocity: aFloat [
-	velocity := aFloat
-
-]
-{
-	#category : #accessing
-}
+{ #category : 'accessing' }
 FlashMelodyEvent >> channel [
 	^ channel
 
 ]
-{
-	#category : #accessing
-}
+
+{ #category : 'accessing' }
 FlashMelodyEvent >> channel: anInteger [
 	channel := anInteger
 
 ]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> orbit [
-	^ orbit
 
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> orbit: anInteger [
-	orbit := anInteger
-
-]
-{
-	#category : #accessing
-}
+{ #category : 'accessing' }
 FlashMelodyEvent >> duration [
 	^ duration
 
 ]
-{
-	#category : #accessing
-}
+
+{ #category : 'accessing' }
 FlashMelodyEvent >> duration: aFloat [
 	duration := aFloat
 
 ]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> gateValue [
-	^ gateValue
 
-]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> gateValue: anInteger [
-	gateValue := anInteger
-
-]
-{
-	#category : #accessing
-}
+{ #category : 'accessing' }
 FlashMelodyEvent >> extraParams [
 	^ extraParams
 
 ]
-{
-	#category : #accessing
-}
+
+{ #category : 'accessing' }
 FlashMelodyEvent >> extraParams: aDictionary [
 	extraParams := aDictionary
 
 ]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> timestamp [
-	^ timestamp
+
+{ #category : 'testing' }
+FlashMelodyEvent >> forceSoundCategory: aSymbol [
+	"Used for testing — forces a specific sound category."
+	forcedCategory := aSymbol
+]
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> gateValue [
+	^ gateValue
 
 ]
-{
-	#category : #accessing
-}
-FlashMelodyEvent >> timestamp: aDateAndTime [
-	timestamp := aDateAndTime
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> gateValue: anInteger [
+	gateValue := anInteger
 
 ]
-{
-	#category : #accessing
-}
+
+{ #category : 'classification' }
+FlashMelodyEvent >> hasEffect: aSymbol [
+	^ extraParams isNotNil and: [ extraParams includesKey: aSymbol ]
+
+]
+
+{ #category : 'classification' }
+FlashMelodyEvent >> isPercussive [
+	^ self soundCategory = #drum
+
+]
+
+{ #category : 'classification' }
+FlashMelodyEvent >> normalizedPitch [
+	noteValue ifNil: [ ^ 0.5 ].
+	^ ((noteValue max: 0) min: 127) / 127.0
+
+]
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> noteValue [
+	^ noteValue
+
+]
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> noteValue: anInteger [
+	noteValue := anInteger
+
+]
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> orbit [
+	^ orbit
+
+]
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> orbit: anInteger [
+	orbit := anInteger
+
+]
+
+{ #category : 'accessing' }
 FlashMelodyEvent >> performer [
 	^ performer
 
 ]
-{
-	#category : #accessing
-}
+
+{ #category : 'accessing' }
 FlashMelodyEvent >> performer: aPerformer [
 	performer := aPerformer
 
 ]
-{
-	#category : #classification
-}
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> sequencerKey [
+	^ sequencerKey
+
+]
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> sequencerKey: anObject [
+	sequencerKey := anObject
+
+]
+
+{ #category : 'classification' }
 FlashMelodyEvent >> soundCategory [
 	| name |
 	forcedCategory ifNotNil: [ ^ forcedCategory ].
@@ -218,32 +182,39 @@ FlashMelodyEvent >> soundCategory [
 	^ #sample
 
 ]
-{
-	#category : #classification
-}
-FlashMelodyEvent >> isPercussive [
-	^ self soundCategory = #drum
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> soundName [
+	^ soundName
 
 ]
-{
-	#category : #classification
-}
-FlashMelodyEvent >> normalizedPitch [
-	noteValue ifNil: [ ^ 0.5 ].
-	^ ((noteValue max: 0) min: 127) / 127.0
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> soundName: aString [
+	soundName := aString
 
 ]
-{
-	#category : #classification
-}
-FlashMelodyEvent >> hasEffect: aSymbol [
-	^ extraParams isNotNil and: [ extraParams includesKey: aSymbol ]
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> timestamp [
+	^ timestamp
 
 ]
-{
-	#category : #testing
-}
-FlashMelodyEvent >> forceSoundCategory: aSymbol [
-	"Used for testing — forces a specific sound category."
-	forcedCategory := aSymbol
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> timestamp: aDateAndTime [
+	timestamp := aDateAndTime
+
+]
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> velocity [
+	^ velocity
+
+]
+
+{ #category : 'accessing' }
+FlashMelodyEvent >> velocity: aFloat [
+	velocity := aFloat
+
 ]

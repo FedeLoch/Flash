@@ -1,8 +1,6 @@
 Extension { #name : 'Performance' }
 
-{
-	#category : #'*Flash-Events'
-}
+{ #category : '*Flash-Events' }
 Performance >> openLiveEditor [
 	"Open a Flash editor connected to this performance"
 	| editor |

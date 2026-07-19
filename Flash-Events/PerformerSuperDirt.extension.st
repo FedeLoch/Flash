@@ -1,8 +1,6 @@
 Extension { #name : 'PerformerSuperDirt' }
 
-{
-	#category : #'*Flash-Events'
-}
+{ #category : '*Flash-Events' }
 PerformerSuperDirt >> playNoteFor: aSequencer [
 	"Extension from Flash — wraps the original playNoteFor: to announce events"
 	super playNoteFor: aSequencer.

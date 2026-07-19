@@ -1,1 +1,1 @@
-Package { #name : #'Flash-Events' }
+Package { #name : 'Flash-Events' }

@@ -147,11 +147,8 @@ FlashLiveEditor >> initializeCompletionController [
 
 { #category : 'initialization' }
 FlashLiveEditor >> initializeEditor [
-	editor := AlbEditor new.
+	editor := AlbEditorElement new.
 	editor constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
-	editor editorElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 	editor addShortcut: (BlShortcutWithAction new
@@ -177,7 +174,7 @@ FlashLiveEditor >> initializeEffectLayer [
 	effectLayer constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
-	effectLayer mouseTransparent: true.
+"	effectLayer mouseTransparent: true."
 	self addChild: effectLayer
 
 ]
