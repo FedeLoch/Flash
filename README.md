@@ -59,6 +59,123 @@ event := FlashMelodyEvent new
 editor handleMelodyEvent: event.
 ```
 
+## Test the Editor
+
+### Write music and see effects live
+
+Open the editor with the default Rana (green phosphor) theme and a connected Coypu performance:
+
+```smalltalk
+editor := FlashLiveEditor new.
+editor connectToPerformance: Performance uniqueInstance.
+editor openInSpace.
+```
+
+Type the following Coypu snippet directly into the editor:
+
+```smalltalk
+Performance uniqueInstance
+  addSequencer: (SequencerMono new
+    seqKey: #kick;
+    gates: #(1 0 0 0 1 0 0 0) asRhythm;
+    notes: #(60);
+    dirtMessage: (Dictionary new at: 's' put: #('bd') asDirtArray; yourself);
+    yourself);
+  play.
+```
+
+Select all the text and press `Cmd`+`D` (DoIt). The sequencer starts playing and the editor background flashes green on every kick hit — the default `FlashRanaEffectTheme` maps `#drum` sounds to `FlashFlashEffect`.
+
+### Try different sound categories
+
+Replace the sequencer code with other sounds to see different effects:
+
+```smalltalk
+"Kick drum — green flash"
+Performance uniqueInstance
+  addSequencer: (SequencerMono new
+    seqKey: #kick;
+    gates: #(1 0 0 0) asRhythm;
+    notes: #(60);
+    dirtMessage: (Dictionary new at: 's' put: #('bd') asDirtArray; yourself);
+    yourself);
+  play.
+```
+
+```smalltalk
+"Snare — amber pulse"
+Performance uniqueInstance
+  addSequencer: (SequencerMono new
+    seqKey: #snare;
+    gates: #(0 0 1 0) asRhythm;
+    notes: #(62);
+    dirtMessage: (Dictionary new at: 's' put: #('sn') asDirtArray; yourself);
+    yourself);
+  play.
+```
+
+```smalltalk
+"Bass — deep green wave"
+Performance uniqueInstance
+  addSequencer: (SequencerMono new
+    seqKey: #bass;
+    gates: #(1 0 1 0) asRhythm;
+    notes: #(36);
+    dirtMessage: (Dictionary new at: 's' put: #('bass') asDirtArray; yourself);
+    yourself);
+  play.
+```
+
+```smalltalk
+"Lead synth — cyan color shift"
+Performance uniqueInstance
+  addSequencer: (SequencerMono new
+    seqKey: #lead;
+    gates: #(1 1 1 1) asRhythm;
+    notes: #(60 64 67 72);
+    dirtMessage: (Dictionary new at: 's' put: #('superpiano') asDirtArray; yourself);
+    yourself);
+  play.
+```
+
+### Manually trigger effects without Coypu
+
+If you just want to preview effects without running the full music engine, fire events directly at the editor:
+
+```smalltalk
+editor := FlashLiveEditor new.
+editor openInSpace.
+
+"Drum hit — green flash"
+editor handleMelodyEvent: (FlashMelodyEvent new
+  sequencerKey: #kick;
+  soundName: 'bd';
+  velocity: 0.9;
+  yourself).
+
+"Bass note — green wave"
+editor handleMelodyEvent: (FlashMelodyEvent new
+  sequencerKey: #bass;
+  soundName: 'bass';
+  velocity: 0.7;
+  yourself).
+
+"Lead note — cyan color shift"
+editor handleMelodyEvent: (FlashMelodyEvent new
+  sequencerKey: #lead;
+  soundName: 'superpiano';
+  velocity: 1.0;
+  yourself).
+```
+
+### Switch themes
+
+```smalltalk
+editor effectTheme: FlashNeonEffectTheme new.
+```
+
+With the Neon theme, drums flash hot pink, bass triggers electric blue waves, and leads produce yellow color shifts.
+
 ## Architecture
 
 ```
@@ -250,6 +367,7 @@ Or run individual test classes:
 ```smalltalk
 (FlashLiveEditorTest selector: #testInitializationCreatesAlbEditor) run.
 (FlashMelodyEventTest selector: #testSoundCategoryForDrumSounds) run.
+(FlashEditorWorkflowTest selector: #testDrumEventTriggersFlashEffect) run.
 ```
 
 ## Test Summary
@@ -273,7 +391,8 @@ Or run individual test classes:
 | `FlashNeonEffectThemeTest` | 4 | Mappings, colors |
 | `FlashThemeEditorElementTest` | 5 | Sub-elements, themes, STON |
 | `FlashCoypuIntegrationTest` | 4 | Extension methods, events |
-| **Total** | **72** | |
+| `FlashEditorWorkflowTest` | 12 | End-to-end editor workflow |
+| **Total** | **84** | |
 
 ## License
 
