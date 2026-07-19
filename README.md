@@ -61,111 +61,97 @@ editor handleMelodyEvent: event.
 
 ## Test the Editor
 
-### Write music and see effects live
+### See effects instantly (no dependencies)
 
-Open the editor with the default Rana (green phosphor) theme and a connected Coypu performance:
+Open the editor and run a self-contained beat loop. No Coypu or SuperDirt needed:
+
+```smalltalk
+| editor beat i |
+editor := FlashLiveEditor new.
+editor openInSpace.
+
+beat := #(
+  'bd'   'kick'     0.9
+  'sn'   'snare'    0.8
+  'bass' 'bass'     0.7
+  'superpiano' 'lead' 1.0
+).
+
+i := 0.
+[
+  [ true ] whileTrue: [
+    | idx |
+    idx := (i \\ 4) * 3 + 1.
+    editor handleMelodyEvent: (FlashMelodyEvent new
+      soundName: (beat at: idx);
+      sequencerKey: (beat at: idx + 1);
+      velocity: (beat at: idx + 2);
+      yourself).
+    i := i + 1.
+    (Delay forMilliseconds: 300) wait ]
+] fork.
+```
+
+This cycles through kick (green flash) → snare (green flash) → bass (green wave) → lead (cyan color shift) every 300ms. To stop it, close the editor window.
+
+### Manually trigger individual events
 
 ```smalltalk
 editor := FlashLiveEditor new.
-editor connectToPerformance: Performance uniqueInstance.
 editor openInSpace.
+
+editor handleMelodyEvent: (FlashMelodyEvent new
+  soundName: 'bd'; sequencerKey: #kick; velocity: 0.9; yourself).
 ```
 
-Type the following Coypu snippet directly into the editor:
+### Write music with Coypu (requires SuperDirt)
+
+If you have [SuperDirt](https://github.com/musikinformatik/SuperDirt) running, you can write Coypu sequencers in the editor and hear audio alongside the visual effects.
+
+Open the editor connected to the performance:
+
+```smalltalk
+Performance uniqueInstance openLiveEditor.
+```
+
+Type a sequencer into the editor and execute with `Cmd`+`D`:
 
 ```smalltalk
 Performance uniqueInstance
-  addSequencer: (SequencerMono new
+  at: #kick put: (SequencerMono new
     seqKey: #kick;
     gates: #(1 0 0 0 1 0 0 0) asRhythm;
     notes: #(60);
     dirtMessage: (Dictionary new at: 's' put: #('bd') asDirtArray; yourself);
-    yourself);
-  play.
+    yourself).
+Performance uniqueInstance play.
 ```
 
-Select all the text and press `Cmd`+`D` (DoIt). The sequencer starts playing and the editor background flashes green on every kick hit — the default `FlashRanaEffectTheme` maps `#drum` sounds to `FlashFlashEffect`.
-
-### Try different sound categories
-
-Replace the sequencer code with other sounds to see different effects:
+Try other sounds:
 
 ```smalltalk
-"Kick drum — green flash"
 Performance uniqueInstance
-  addSequencer: (SequencerMono new
-    seqKey: #kick;
-    gates: #(1 0 0 0) asRhythm;
-    notes: #(60);
-    dirtMessage: (Dictionary new at: 's' put: #('bd') asDirtArray; yourself);
-    yourself);
-  play.
-```
-
-```smalltalk
-"Snare — amber pulse"
-Performance uniqueInstance
-  addSequencer: (SequencerMono new
+  at: #snare put: (SequencerMono new
     seqKey: #snare;
     gates: #(0 0 1 0) asRhythm;
     notes: #(62);
     dirtMessage: (Dictionary new at: 's' put: #('sn') asDirtArray; yourself);
-    yourself);
-  play.
-```
-
-```smalltalk
-"Bass — deep green wave"
+    yourself).
 Performance uniqueInstance
-  addSequencer: (SequencerMono new
+  at: #bass put: (SequencerMono new
     seqKey: #bass;
     gates: #(1 0 1 0) asRhythm;
     notes: #(36);
     dirtMessage: (Dictionary new at: 's' put: #('bass') asDirtArray; yourself);
-    yourself);
-  play.
-```
-
-```smalltalk
-"Lead synth — cyan color shift"
+    yourself).
 Performance uniqueInstance
-  addSequencer: (SequencerMono new
+  at: #lead put: (SequencerMono new
     seqKey: #lead;
     gates: #(1 1 1 1) asRhythm;
     notes: #(60 64 67 72);
     dirtMessage: (Dictionary new at: 's' put: #('superpiano') asDirtArray; yourself);
-    yourself);
-  play.
-```
-
-### Manually trigger effects without Coypu
-
-If you just want to preview effects without running the full music engine, fire events directly at the editor:
-
-```smalltalk
-editor := FlashLiveEditor new.
-editor openInSpace.
-
-"Drum hit — green flash"
-editor handleMelodyEvent: (FlashMelodyEvent new
-  sequencerKey: #kick;
-  soundName: 'bd';
-  velocity: 0.9;
-  yourself).
-
-"Bass note — green wave"
-editor handleMelodyEvent: (FlashMelodyEvent new
-  sequencerKey: #bass;
-  soundName: 'bass';
-  velocity: 0.7;
-  yourself).
-
-"Lead note — cyan color shift"
-editor handleMelodyEvent: (FlashMelodyEvent new
-  sequencerKey: #lead;
-  soundName: 'superpiano';
-  velocity: 1.0;
-  yourself).
+    yourself).
+Performance uniqueInstance play.
 ```
 
 ### Switch themes
