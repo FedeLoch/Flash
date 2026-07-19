@@ -9,16 +9,7 @@ The editor executes Pharo code (like the standard Playground), listens for melod
 ```smalltalk
 Metacello new
   baseline: 'Flash';
-  repository: 'github://your-org/Flash:main';
-  load.
-```
-
-To load locally from a cloned repository:
-
-```smalltalk
-Metacello new
-  baseline: 'Flash';
-  repository: 'file://', (FileLocator imageDirectory / 'pharo-local' / 'Flash' / 'src') pathString;
+  repository: 'github://FedeLoch/Flash:main';
   load.
 ```
 
