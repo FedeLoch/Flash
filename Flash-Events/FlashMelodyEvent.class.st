@@ -12,7 +12,8 @@ Class {
 		'gateValue',
 		'extraParams',
 		'timestamp',
-		'performer'
+		'performer',
+		'forcedCategory'
 	],
 	#category : #'Flash-Events'
 }
@@ -202,6 +203,7 @@ FlashMelodyEvent >> performer: aPerformer [
 }
 FlashMelodyEvent >> soundCategory [
 	| name |
+	forcedCategory ifNotNil: [ ^ forcedCategory ].
 	name := soundName ifNil: [ ^ #sample ].
 	(#('bd' 'kick' 'sn' 'snare' 'hh' 'hihat' 'cp' 'clap' 'rim' 'tom' 'crash' 'ride' 'cymbal') includes: name)
 		ifTrue: [ ^ #drum ].
@@ -228,7 +230,7 @@ FlashMelodyEvent >> isPercussive [
 }
 FlashMelodyEvent >> normalizedPitch [
 	noteValue ifNil: [ ^ 0.5 ].
-	^ (noteValue max: 0 min: 127) / 127.0
+	^ ((noteValue max: 0) min: 127) / 127.0
 
 ]
 {
@@ -243,5 +245,5 @@ FlashMelodyEvent >> hasEffect: aSymbol [
 }
 FlashMelodyEvent >> forceSoundCategory: aSymbol [
 	"Used for testing — forces a specific sound category."
-	soundName := aSymbol asString
+	forcedCategory := aSymbol
 ]

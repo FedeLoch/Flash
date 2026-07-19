@@ -41,6 +41,7 @@ FlashEditorEventListenerTest >> testOnMelodyEventReceivesAnnouncement [
 	| listener received event |
 	listener := FlashEditorEventListener new.
 	received := nil.
+	listener startListening.
 	listener onMelodyEvent: [ :evt | received := evt ].
 	event := FlashMelodyEvent new soundName: 'bd'; yourself.
 	FlashEditorEventListener globalAnnouncer announce: event.
@@ -56,6 +57,7 @@ FlashEditorEventListenerTest >> testMultipleSubscribersAllReceiveEvents [
 	| listener received1 received2 event |
 	listener := FlashEditorEventListener new.
 	received1 := nil. received2 := nil.
+	listener startListening.
 	listener onMelodyEvent: [ :evt | received1 := evt ].
 	listener onMelodyEvent: [ :evt | received2 := evt ].
 	event := FlashMelodyEvent new soundName: 'sn'; yourself.

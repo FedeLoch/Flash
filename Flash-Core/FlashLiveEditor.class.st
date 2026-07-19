@@ -154,6 +154,18 @@ FlashLiveEditor >> initializeEditor [
 	editor editorElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
+	editor addShortcut: (BlShortcutWithAction new
+		combination: (BlKeyCombination builder meta; key: KeyboardKey D; build);
+		action: [ self doIt ]).
+	editor addShortcut: (BlShortcutWithAction new
+		combination: (BlKeyCombination builder meta; key: KeyboardKey P; build);
+		action: [ self printIt ]).
+	editor addShortcut: (BlShortcutWithAction new
+		combination: (BlKeyCombination builder meta; key: KeyboardKey I; build);
+		action: [ self inspectIt ]).
+	editor addShortcut: (BlShortcutWithAction new
+		combination: (BlKeyCombination builder meta; key: KeyboardKey G; build);
+		action: [ self debugIt ]).
 	self addChild: editor
 
 ]

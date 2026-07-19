@@ -1,8 +1,8 @@
 {
 	#category : #'*Flash-Events'
 }
-PerformerSuperDirt >> playNoteFor: aSequencer at: anIndex [
+PerformerSuperDirt >> playNoteFor: aSequencer [
 	"Extension from Flash — wraps the original playNoteFor: to announce events"
-	self announcePlayOf: aSequencer at: anIndex.
-	^ self
+	super playNoteFor: aSequencer.
+	self announcePlayOf: aSequencer at: aSequencer noteIndex
 ]

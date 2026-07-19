@@ -99,3 +99,9 @@ FlashVisualEffect >> stop [
 FlashVisualEffect >> isFinished [
 	^ animation isNil or: [ animation isFinished ]
 ]
+{
+	#category : #testing
+}
+FlashVisualEffect >> beFinished [
+	animation := nil
+]

@@ -34,6 +34,8 @@ FlashBorderFlashEffect >> buildAnimation [
 		build.
 	endBorder := BlBorder empty.
 	animation := BlColorTransition new
+		from: (color alpha: intensity);
+		to: Color transparent;
 		duration: duration;
 		onStepDo: [ :c |
 			targetElement border: (BlBorder builder
