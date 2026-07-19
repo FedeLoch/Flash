@@ -31,6 +31,10 @@ FlashEffectTheme >> applyToEditor: aFlashLiveEditor [
 	aFlashLiveEditor background: backgroundColor.
 	aFlashLiveEditor editor background: backgroundColor.
 	textColor ifNotNil: [
+		aFlashLiveEditor editor
+			selectionColor: (textColor alpha: 0.3).
+		aFlashLiveEditor editor cursor
+			ifNotNil: [ :c | c color: textColor ].
 		| text |
 		text := aFlashLiveEditor editor text.
 		text isEmpty
