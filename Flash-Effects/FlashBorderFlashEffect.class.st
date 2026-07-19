@@ -1,21 +1,11 @@
 Class {
-	#name : #FlashBorderFlashEffect,
-	#superclass : #FlashVisualEffect,
-	#category : #'Flash-Effects'
+	#name : 'FlashBorderFlashEffect',
+	#superclass : 'FlashVisualEffect',
+	#category : 'Flash-Effects',
+	#package : 'Flash-Effects'
 }
 
-{
-	#category : #initialization
-}
-FlashBorderFlashEffect >> initialize [
-	super initialize.
-	duration := 250 milliSeconds.
-	intensity := 0.5
-
-]
-{
-	#category : #api
-}
+{ #category : 'api' }
 FlashBorderFlashEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent [
 	targetElement := aBlElement.
 	self intensity: (aFlashMelodyEvent velocity ifNil: [ 0.5 ]).
@@ -23,9 +13,13 @@ FlashBorderFlashEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent [
 	animation start
 
 ]
-{
-	#category : #animation
-}
+
+{ #category : 'accessing' }
+FlashBorderFlashEffect >> borderWidth [
+	^ (intensity * 4) asFloat max: 1.0
+]
+
+{ #category : 'animation' }
 FlashBorderFlashEffect >> buildAnimation [
 	| startBorder endBorder |
 	startBorder := BlBorder builder
@@ -45,9 +39,11 @@ FlashBorderFlashEffect >> buildAnimation [
 		yourself
 
 ]
-{
-	#category : #accessing
-}
-FlashBorderFlashEffect >> borderWidth [
-	^ (intensity * 4) asFloat max: 1.0
+
+{ #category : 'initialization' }
+FlashBorderFlashEffect >> initialize [
+	super initialize.
+	duration := 250 milliSeconds.
+	intensity := 0.5
+
 ]

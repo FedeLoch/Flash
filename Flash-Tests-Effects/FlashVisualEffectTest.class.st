@@ -1,22 +1,27 @@
 Class {
-	#name : #FlashVisualEffectTest,
-	#superclass : #TestCase,
-	#category : #'Flash-Tests-Effects'
+	#name : 'FlashVisualEffectTest',
+	#superclass : 'TestCase',
+	#category : 'Flash-Tests-Effects',
+	#package : 'Flash-Tests-Effects'
 }
 
-{
-	#category : #tests
-}
+{ #category : 'tests' }
+FlashVisualEffectTest >> testAllSubclassesRespondToApply [
+	FlashVisualEffect allSubclasses do: [ :cls |
+		cls isAbstract ifFalse: [
+			self assert: (cls canUnderstand: #applyTo:withEvent:) ] ]
+]
+
+{ #category : 'tests' }
 FlashVisualEffectTest >> testDefaultDuration [
+
 	| effect |
 	effect := FlashFlashEffect new.
 	self assert: effect duration isNotNil.
-	self assert: effect duration > 0 asDuration
-
+	self assert: effect duration > (Duration milliSeconds: 0)
 ]
-{
-	#category : #tests
-}
+
+{ #category : 'tests' }
 FlashVisualEffectTest >> testSetIntensity [
 	| effect |
 	effect := FlashFlashEffect new.
@@ -28,21 +33,12 @@ FlashVisualEffectTest >> testSetIntensity [
 	self assert: effect intensity equals: 0.0
 
 ]
-{
-	#category : #tests
-}
+
+{ #category : 'tests' }
 FlashVisualEffectTest >> testStopMarksEffectAsFinished [
 	| effect |
 	effect := FlashFlashEffect new.
 	effect stop.
 	self assert: effect isFinished
 
-]
-{
-	#category : #tests
-}
-FlashVisualEffectTest >> testAllSubclassesRespondToApply [
-	FlashVisualEffect allSubclasses do: [ :cls |
-		cls isAbstract ifFalse: [
-			self assert: (cls canUnderstand: #applyTo:withEvent:) ] ]
 ]

@@ -6,15 +6,18 @@ Class {
 		'performance',
 		'isListening'
 	],
+	#classVars : [
+		'GlobalAnnouncer'
+	],
 	#category : 'Flash-Events',
 	#package : 'Flash-Events'
 }
 
 { #category : 'accessing' }
 FlashEditorEventListener class >> globalAnnouncer [
-	^ FlashEditorEventListener classVarNamed: #GlobalAnnouncer ifAbsent: [
-		self classVarNamed: #GlobalAnnouncer put: Announcer new ]
 
+	GlobalAnnouncer ifNil: [ GlobalAnnouncer := Announcer new ].
+	^ GlobalAnnouncer
 ]
 
 { #category : 'accessing' }

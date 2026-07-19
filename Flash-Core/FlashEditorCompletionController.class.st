@@ -22,6 +22,12 @@ FlashEditorCompletionController >> canAcceptSuggestion: aSuggestion forPartial: 
 
 ]
 
+{ #category : 'completion' }
+FlashEditorCompletionController >> classNamesMatching: aPrefix [
+
+	^ (Smalltalk classNames select: [ :each | each beginsWith: aPrefix ]) sorted
+]
+
 { #category : 'accessing' }
 FlashEditorCompletionController >> completionEngine [
 	^ completionEngine
@@ -66,6 +72,12 @@ FlashEditorCompletionController >> popupElement [
 
 ]
 
+{ #category : 'completion' }
+FlashEditorCompletionController >> selectorsMatching: aPrefix [
+
+	^ ((Object selectors select: [ :each | each beginsWith: aPrefix asSymbol ]) collect: [ :each | each asString ]) sorted
+]
+
 { #category : 'popup' }
 FlashEditorCompletionController >> showPopup: suggestions at: position [
 	self dismiss.
@@ -80,17 +92,18 @@ FlashEditorCompletionController >> showPopup: suggestions at: position [
 
 { #category : 'completion' }
 FlashEditorCompletionController >> suggestionsForSource: aString atPosition: anInteger [
-	| ast completionContext entries |
-	[ ast := completionEngine parse: aString class: Object ]
-		on: Error
-		do: [ ^ #() ].
-	completionContext := NECContext new
-		ast: ast;
-		position: anInteger;
-		yourself.
-	entries := completionContext entries.
-	^ entries collect: [ :each | each contents ]
 
+	| prefix separators start |
+	prefix := aString first: (anInteger min: aString size).
+	separators := {
+		              Character space.
+		              Character cr.
+		              Character tab.
+		              $. }.
+	start := prefix findLast: [ :c | separators includes: c ].
+	start > 0 ifTrue: [ prefix := prefix allButFirst: start ].
+	prefix isEmpty ifTrue: [ ^ #(  ) ].
+	^ (self classNamesMatching: prefix) , (self selectorsMatching: prefix)
 ]
 
 { #category : 'popup' }

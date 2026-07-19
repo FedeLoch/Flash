@@ -15,6 +15,22 @@ Class {
 	#package : 'Flash-Core'
 }
 
+{ #category : 'examples' }
+FlashLiveEditor class >> example [
+
+	<sampleInstance>
+	^ self new openInSpace
+]
+
+{ #category : 'examples' }
+FlashLiveEditor class >> exampleConnectedToPerformance [
+
+	| editor |
+	editor := self new.
+	editor connectToPerformance: Performance uniqueInstance.
+	^ editor openInSpace
+]
+
 { #category : 'accessing' }
 FlashLiveEditor >> activeEffects [
 	^ activeEffects
@@ -127,7 +143,8 @@ FlashLiveEditor >> initialize [
 	self initializeEffectLayer.
 	self initializeEventListener.
 	self initializeCodeEvaluator.
-	self initializeCompletionController
+	self initializeCompletionController.
+	self initializeDefaultTheme
 ]
 
 { #category : 'initialization' }
@@ -143,6 +160,12 @@ FlashLiveEditor >> initializeCodeEvaluator [
 FlashLiveEditor >> initializeCompletionController [
 	completionController := FlashEditorCompletionController new editor: self
 
+]
+
+{ #category : 'initialization' }
+FlashLiveEditor >> initializeDefaultTheme [
+
+	self effectTheme: FlashRanaEffectTheme new
 ]
 
 { #category : 'initialization' }
@@ -169,14 +192,12 @@ FlashLiveEditor >> initializeEditor [
 
 { #category : 'initialization' }
 FlashLiveEditor >> initializeEffectLayer [
+
 	effectLayer := BlElement new.
 	effectLayer background: Color transparent.
 	effectLayer constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
-"	effectLayer mouseTransparent: true."
-	self addChild: effectLayer
-
+			c horizontal matchParent.
+			c vertical matchParent ]
 ]
 
 { #category : 'initialization' }

@@ -31,16 +31,18 @@ FlashMelodyEvent class >> extractSoundNameFrom: aSequencer [
 
 { #category : 'instance creation' }
 FlashMelodyEvent class >> fromSequencer: aSequencer at: anIndex [
-	^ self new
-		sequencerKey: aSequencer seqKey;
-		noteValue: (aSequencer notes at: (anIndex min: aSequencer notes size) max: 1);
-		velocity: (aSequencer velocity ifNotNil: [ :v | v ] ifNil: [ 0.8 ]);
-		gateValue: (aSequencer gates at: (anIndex min: aSequencer gates size) max: 1);
-		soundName: (self extractSoundNameFrom: aSequencer);
-		extraParams: (aSequencer dirtMessage ifNil: [ Dictionary new ] ifNotNil: [ aSequencer dirtMessage ]);
-		timestamp: DateAndTime now;
-		yourself
 
+	^ self new
+		  sequencerKey: aSequencer seqKey;
+		  noteValue: (aSequencer notes at: ((anIndex min: aSequencer notes size) max: 1));
+		  velocity: ([ aSequencer velocity ifNil: [ 0.8 ] ]
+				   on: MessageNotUnderstood
+				   do: [ 0.8 ]);
+		  gateValue: (aSequencer gates at: ((anIndex min: aSequencer gates size) max: 1));
+		  soundName: (self extractSoundNameFrom: aSequencer);
+		  extraParams: (aSequencer dirtMessage ifNil: [ Dictionary new ] ifNotNil: [ aSequencer dirtMessage ]);
+		  timestamp: DateAndTime now;
+		  yourself
 ]
 
 { #category : 'accessing' }

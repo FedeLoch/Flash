@@ -30,11 +30,14 @@ FlashEditorCodeEvaluator >> context: anObject [
 
 { #category : 'evaluation' }
 FlashEditorCodeEvaluator >> debugSelection [
+
 	| selection |
 	selection := self selectedText.
 	selection ifEmpty: [ ^ self ].
-	compiler evaluate: selection receiver: context logged: true debug: true
-
+	compiler
+		receiver: context;
+		logged: true;
+		evaluate: selection
 ]
 
 { #category : 'accessing' }
@@ -51,8 +54,11 @@ FlashEditorCodeEvaluator >> editor: aFlashLiveEditor [
 
 { #category : 'evaluation' }
 FlashEditorCodeEvaluator >> evaluate: aString [
-	^ compiler evaluate: aString receiver: context logged: true
 
+	^ compiler
+		  receiver: context;
+		  logged: true;
+		  evaluate: aString
 ]
 
 { #category : 'evaluation' }

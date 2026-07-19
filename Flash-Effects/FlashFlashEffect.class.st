@@ -1,20 +1,11 @@
 Class {
-	#name : #FlashFlashEffect,
-	#superclass : #FlashVisualEffect,
-	#category : #'Flash-Effects'
+	#name : 'FlashFlashEffect',
+	#superclass : 'FlashVisualEffect',
+	#category : 'Flash-Effects',
+	#package : 'Flash-Effects'
 }
 
-{
-	#category : #initialization
-}
-FlashFlashEffect >> initialize [
-	super initialize.
-	duration := 200 milliSeconds
-
-]
-{
-	#category : #api
-}
+{ #category : 'api' }
 FlashFlashEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent [
 	targetElement := aBlElement.
 	self intensity: (aFlashMelodyEvent velocity ifNil: [ 0.5 ]).
@@ -22,9 +13,8 @@ FlashFlashEffect >> applyTo: aBlElement withEvent: aFlashMelodyEvent [
 	animation start
 
 ]
-{
-	#category : #animation
-}
+
+{ #category : 'animation' }
 FlashFlashEffect >> buildAnimation [
 	| startColor endColor |
 	startColor := self flashColor.
@@ -37,9 +27,15 @@ FlashFlashEffect >> buildAnimation [
 		yourself
 
 ]
-{
-	#category : #color
-}
+
+{ #category : 'color' }
 FlashFlashEffect >> flashColor [
 	^ color alpha: intensity
+]
+
+{ #category : 'initialization' }
+FlashFlashEffect >> initialize [
+	super initialize.
+	duration := 200 milliSeconds
+
 ]

@@ -1,24 +1,26 @@
 Class {
-	#name : #FlashFlashEffectTest,
-	#superclass : #TestCase,
-	#category : #'Flash-Tests-Effects'
+	#name : 'FlashFlashEffectTest',
+	#superclass : 'TestCase',
+	#category : 'Flash-Tests-Effects',
+	#package : 'Flash-Tests-Effects'
 }
 
-{
-	#category : #tests
-}
+{ #category : 'tests' }
 FlashFlashEffectTest >> testApplyChangesBackgroundColor [
+
 	| effect target event |
-	target := BlElement new size: 100@100.
-	event := FlashMelodyEvent new velocity: 0.8; yourself.
-	effect := FlashFlashEffect new color: Color green; intensity: 0.8.
+	target := BlElement new extent: 100 @ 100.
+	event := FlashMelodyEvent new
+		         velocity: 0.8;
+		         yourself.
+	effect := FlashFlashEffect new
+		          color: Color green;
+		          intensity: 0.8.
 	effect applyTo: target withEvent: event.
 	self assert: effect animation isNotNil
-
 ]
-{
-	#category : #tests
-}
+
+{ #category : 'tests' }
 FlashFlashEffectTest >> testFlashColorDerivedFromEffectColor [
 	| effect flashColor |
 	effect := FlashFlashEffect new color: (Color fromHexString: '00FF41'); intensity: 0.6.
@@ -27,9 +29,8 @@ FlashFlashEffectTest >> testFlashColorDerivedFromEffectColor [
 	self assert: (flashColor alpha closeTo: 0.6)
 
 ]
-{
-	#category : #tests
-}
+
+{ #category : 'tests' }
 FlashFlashEffectTest >> testFlashDurationIsShort [
 	| effect |
 	effect := FlashFlashEffect new.

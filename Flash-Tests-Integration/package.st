@@ -1,1 +1,1 @@
-Package { #name : #'Flash-Tests-Integration' }
+Package { #name : 'Flash-Tests-Integration' }

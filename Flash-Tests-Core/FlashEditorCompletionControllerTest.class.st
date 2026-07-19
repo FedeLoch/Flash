@@ -1,21 +1,18 @@
 Class {
-	#name : #FlashEditorCompletionControllerTest,
-	#superclass : #TestCase,
-	#category : #'Flash-Tests-Core'
+	#name : 'FlashEditorCompletionControllerTest',
+	#superclass : 'TestCase',
+	#category : 'Flash-Tests-Core',
+	#package : 'Flash-Tests-Core'
 }
 
-{
-	#category : #tests
-}
-FlashEditorCompletionControllerTest >> testPopupInitiallyHidden [
+{ #category : 'tests' }
+FlashEditorCompletionControllerTest >> testAcceptSelectedInsertsSuggestion [
 	| controller |
 	controller := FlashEditorCompletionController new.
-	self assert: controller isPopupVisible not
-
+	self assert: (controller canAcceptSuggestion: 'OrderedCollection' forPartial: 'OrderedCollec')
 ]
-{
-	#category : #tests
-}
+
+{ #category : 'tests' }
 FlashEditorCompletionControllerTest >> testDismissHidesPopup [
 	| controller |
 	controller := FlashEditorCompletionController new.
@@ -23,20 +20,20 @@ FlashEditorCompletionControllerTest >> testDismissHidesPopup [
 	self assert: controller isPopupVisible not
 
 ]
-{
-	#category : #tests
-}
+
+{ #category : 'tests' }
+FlashEditorCompletionControllerTest >> testPopupInitiallyHidden [
+	| controller |
+	controller := FlashEditorCompletionController new.
+	self assert: controller isPopupVisible not
+
+]
+
+{ #category : 'tests' }
 FlashEditorCompletionControllerTest >> testTriggerCompletionReturnsSuggestions [
 	| controller suggestions |
 	controller := FlashEditorCompletionController new.
 	suggestions := controller suggestionsForSource: 'OrderedCollec' atPosition: 13.
 	self assert: (suggestions anySatisfy: [ :each | each includesSubstring: 'OrderedCollection' ])
 
-]
-{
-	#category : #tests}
-FlashEditorCompletionControllerTest >> testAcceptSelectedInsertsSuggestion [
-	| controller |
-	controller := FlashEditorCompletionController new.
-	self assert: (controller canAcceptSuggestion: 'OrderedCollection' forPartial: 'OrderedCollec')
 ]
