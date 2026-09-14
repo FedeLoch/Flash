@@ -113,7 +113,7 @@ FlashTransportBarElement >> transportLabel [
 
 { #category : 'updating' }
 FlashTransportBarElement >> updateBpmLabel [
-	bpmValueLabel text: ((workspace bpm asInteger printString) , ' BPM' asRopedText)
+	bpmValueLabel text: ((workspace bpm asInteger printString , ' BPM') asRopedText)
 ]
 
 { #category : 'accessing' }

@@ -149,7 +149,7 @@ FlashStageDockElement >> panicButton [
 { #category : 'updating' }
 FlashStageDockElement >> sparkDensity: anInteger [
 	sparkDensity := (anInteger max: 0) min: 8.
-	sparkLabel text: ('SPARK x' , sparkDensity printString asRopedText)
+	sparkLabel text: (('SPARK x' , sparkDensity printString) asRopedText)
 ]
 
 { #category : 'accessing' }
@@ -160,7 +160,7 @@ FlashStageDockElement >> sparkLabel [
 { #category : 'events' }
 FlashStageDockElement >> stepClock: anInteger [
 	miniMatrix tickToStep: anInteger.
-	stepValueLabel text: ('STEP ' , anInteger printString asRopedText).
+	stepValueLabel text: (('STEP ' , anInteger printString) asRopedText).
 	anInteger = 0 ifTrue: [ self flashMasterBeat ]
 ]
 
@@ -197,7 +197,7 @@ FlashStageDockElement >> transportToggleButton [
 
 { #category : 'updating' }
 FlashStageDockElement >> updateBpm [
-	bpmDisplayLabel text: ((workspace bpm asInteger printString) , ' BPM' asRopedText)
+	bpmDisplayLabel text: ((workspace bpm asInteger printString , ' BPM') asRopedText)
 ]
 
 { #category : 'building' }

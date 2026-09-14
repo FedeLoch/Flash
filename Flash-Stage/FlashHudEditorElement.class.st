@@ -102,7 +102,7 @@ FlashHudEditorElement >> hudOpacity [
 FlashHudEditorElement >> hudOpacity: aNumber [
 	hudOpacity := aNumber.
 	self opacity: hudOpacity.
-	opacityValueLabel text: ((hudOpacity * 100) asInteger printString , '%' asRopedText)
+	opacityValueLabel text: (((hudOpacity * 100) asInteger printString , '%') asRopedText)
 ]
 
 { #category : 'initialization' }
