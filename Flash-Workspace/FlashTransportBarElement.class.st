@@ -84,7 +84,7 @@ FlashTransportBarElement >> initialize [
 { #category : 'building' }
 FlashTransportBarElement >> label: aString [
 	| text |
-	text := BlTextElement new text: (aString asRopedText).
+	text := BlTextElement new text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
@@ -113,7 +113,7 @@ FlashTransportBarElement >> transportLabel [
 
 { #category : 'updating' }
 FlashTransportBarElement >> updateBpmLabel [
-	bpmValueLabel text: ((workspace bpm asInteger printString , ' BPM') asRopedText)
+	bpmValueLabel text: (((workspace bpm asInteger printString , ' BPM') asRopedText) foreground: (Color fromHexString: '#C5CDD8'))
 ]
 
 { #category : 'accessing' }

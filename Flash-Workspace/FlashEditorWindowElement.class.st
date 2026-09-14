@@ -80,7 +80,7 @@ FlashEditorWindowElement >> inspectItButton [
 { #category : 'building' }
 FlashEditorWindowElement >> label: aString [
 	| text |
-	text := BlTextElement new text: (aString asRopedText).
+	text := BlTextElement new text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
@@ -109,5 +109,5 @@ FlashEditorWindowElement >> toast [
 
 { #category : 'updating' }
 FlashEditorWindowElement >> toastText: aString [
-	toast text: (aString asRopedText)
+	toast text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8'))
 ]

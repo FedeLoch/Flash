@@ -124,7 +124,7 @@ FlashStageDockElement >> initialize [
 { #category : 'building' }
 FlashStageDockElement >> label: aString [
 	| text |
-	text := BlTextElement new text: (aString asRopedText).
+	text := BlTextElement new text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
@@ -149,7 +149,7 @@ FlashStageDockElement >> panicButton [
 { #category : 'updating' }
 FlashStageDockElement >> sparkDensity: anInteger [
 	sparkDensity := (anInteger max: 0) min: 8.
-	sparkLabel text: (('SPARK x' , sparkDensity printString) asRopedText)
+	sparkLabel text: ((('SPARK x' , sparkDensity printString) asRopedText) foreground: (Color fromHexString: '#C5CDD8'))
 ]
 
 { #category : 'accessing' }
@@ -160,7 +160,7 @@ FlashStageDockElement >> sparkLabel [
 { #category : 'events' }
 FlashStageDockElement >> stepClock: anInteger [
 	miniMatrix tickToStep: anInteger.
-	stepValueLabel text: (('STEP ' , anInteger printString) asRopedText).
+	stepValueLabel text: ((('STEP ' , anInteger printString) asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	anInteger = 0 ifTrue: [ self flashMasterBeat ]
 ]
 
@@ -187,7 +187,7 @@ FlashStageDockElement >> tickerLabel [
 
 { #category : 'updating' }
 FlashStageDockElement >> tickerText: aString [
-	tickerLabel text: (aString asRopedText)
+	tickerLabel text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8'))
 ]
 
 { #category : 'accessing' }
@@ -197,7 +197,7 @@ FlashStageDockElement >> transportToggleButton [
 
 { #category : 'updating' }
 FlashStageDockElement >> updateBpm [
-	bpmDisplayLabel text: ((workspace bpm asInteger printString , ' BPM') asRopedText)
+	bpmDisplayLabel text: (((workspace bpm asInteger printString , ' BPM') asRopedText) foreground: (Color fromHexString: '#C5CDD8'))
 ]
 
 { #category : 'building' }

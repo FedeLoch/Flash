@@ -66,7 +66,7 @@ FlashMiniMatrixElement >> initialize [
 { #category : 'building' }
 FlashMiniMatrixElement >> laneLabel: aSymbol [
 	| text |
-	text := BlTextElement new text: (aSymbol asString asUppercase asRopedText).
+	text := BlTextElement new text: ((aSymbol asString asUppercase asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal exact: 42.
 		c vertical exact: 12 ].

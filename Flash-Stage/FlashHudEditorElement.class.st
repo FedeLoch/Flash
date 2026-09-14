@@ -102,7 +102,7 @@ FlashHudEditorElement >> hudOpacity [
 FlashHudEditorElement >> hudOpacity: aNumber [
 	hudOpacity := aNumber.
 	self opacity: hudOpacity.
-	opacityValueLabel text: (((hudOpacity * 100) asInteger printString , '%') asRopedText)
+	opacityValueLabel text: ((((hudOpacity * 100) asInteger printString , '%') asRopedText) foreground: (Color fromHexString: '#C5CDD8'))
 ]
 
 { #category : 'initialization' }
@@ -127,7 +127,7 @@ FlashHudEditorElement >> isEditorVisible [
 { #category : 'building' }
 FlashHudEditorElement >> label: aString [
 	| text |
-	text := BlTextElement new text: (aString asRopedText).
+	text := BlTextElement new text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].

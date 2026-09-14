@@ -53,7 +53,7 @@ FlashEventStreamElement >> refreshWith: anArrayOfStrings [
 		ifFalse: [ anArrayOfStrings last: displayCount ].
 	recent do: [ :entry |
 		| text |
-		text := BlTextElement new text: (entry asRopedText).
+		text := BlTextElement new text: ((entry asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 		text constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical exact: 16 ].
@@ -64,7 +64,7 @@ FlashEventStreamElement >> refreshWith: anArrayOfStrings [
 { #category : 'building' }
 FlashEventStreamElement >> titleLabel: aString [
 	| text |
-	text := BlTextElement new text: (aString asRopedText).
+	text := BlTextElement new text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical exact: 16 ].

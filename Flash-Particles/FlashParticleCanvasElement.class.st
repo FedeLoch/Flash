@@ -142,7 +142,7 @@ FlashParticleCanvasElement >> spawnXFor: aFlashMelodyEvent [
 
 { #category : 'updating' }
 FlashParticleCanvasElement >> updateLabel [
-	labelText text: (('PARTICLES ' , engine size printString) asRopedText)
+	labelText text: ((('PARTICLES ' , engine size printString) asRopedText) foreground: (Color fromHexString: '#C5CDD8'))
 ]
 
 { #category : 'accessing' }

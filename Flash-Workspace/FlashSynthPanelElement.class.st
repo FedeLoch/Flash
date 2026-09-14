@@ -67,7 +67,7 @@ FlashSynthPanelElement >> initialize [
 { #category : 'building' }
 FlashSynthPanelElement >> miniLabel: aString [
 	| text |
-	text := BlTextElement new text: (aString asRopedText).
+	text := BlTextElement new text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
@@ -87,7 +87,7 @@ FlashSynthPanelElement >> refresh [
 { #category : 'building' }
 FlashSynthPanelElement >> rowLabel: aString [
 	| text |
-	text := BlTextElement new text: (aString asRopedText).
+	text := BlTextElement new text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical exact: 14 ].
@@ -103,7 +103,7 @@ FlashSynthPanelElement >> stepFor: aSymbol [
 { #category : 'updating' }
 FlashSynthPanelElement >> updateValueLabels [
 	valueLabels keysAndValuesDo: [ :key :label |
-		label text: ((self formatValue: (panel valueFor: key) for: key) asRopedText) ]
+		label text: (((self formatValue: (panel valueFor: key) for: key) asRopedText) foreground: (Color fromHexString: '#C5CDD8')) ]
 ]
 
 { #category : 'accessing' }

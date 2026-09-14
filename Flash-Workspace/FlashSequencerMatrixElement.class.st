@@ -81,7 +81,7 @@ FlashSequencerMatrixElement >> cellForLane: aSymbol atStep: anInteger [
 { #category : 'building' }
 FlashSequencerMatrixElement >> headerLabel: aString paddedTo: anInteger [
 	| text |
-	text := BlTextElement new text: (aString asRopedText).
+	text := BlTextElement new text: ((aString asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal exact: anInteger.
 		c vertical exact: 16 ].
@@ -110,7 +110,7 @@ FlashSequencerMatrixElement >> isLaneActiveAtStep: anIndex lane: aSymbol [
 { #category : 'building' }
 FlashSequencerMatrixElement >> laneLabel: aSymbol [
 	| text |
-	text := BlTextElement new text: (aSymbol asString asUppercase asRopedText).
+	text := BlTextElement new text: ((aSymbol asString asUppercase asRopedText) foreground: (Color fromHexString: '#C5CDD8')).
 	text constraintsDo: [ :c |
 		c horizontal exact: 44.
 		c vertical exact: 16 ].
