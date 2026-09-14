@@ -9,8 +9,9 @@ Class {
 FlashRanaEffectTheme >> initialize [
 	super initialize.
 	name := 'Rana'.
-	backgroundColor := Color black.
-	textColor := Color fromHexString: '00FF41'.
+	pillId := #phosphor.
+	backgroundColor := Color fromHexString: '05231E'.
+	textColor := Color fromHexString: '60FF99'.
 	self initializeMappings.
 	self initializeAccentColors
 

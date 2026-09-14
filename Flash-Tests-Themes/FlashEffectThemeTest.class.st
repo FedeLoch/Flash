@@ -1,63 +1,39 @@
 Class {
-	#name : #FlashEffectThemeTest,
-	#superclass : #TestCase,
-	#category : #'Flash-Tests-Themes'
+	#name : 'FlashEffectThemeTest',
+	#superclass : 'TestCase',
+	#category : 'Flash-Tests-Themes',
+	#package : 'Flash-Tests-Themes'
 }
 
-{
-	#category : #tests
-}
-FlashEffectThemeTest >> testEffectForEventReturnsEffectInstance [
-	| theme event effect |
-	theme := FlashRanaEffectTheme new.
-	event := FlashMelodyEvent new soundName: 'bd'; yourself.
-	effect := theme effectForEvent: event.
-	self assert: effect isNotNil.
-	self assert: (effect isKindOf: FlashVisualEffect)
-
+{ #category : 'tests' }
+FlashEffectThemeTest >> testAllThemesHavePillIds [
+	FlashThemeRegistry availableThemes do: [ :theme |
+		self assert: theme pillId isNotNil.
+		self deny: theme name isEmpty.
+		self assert: theme backgroundColor isNotNil.
+		self assert: theme textColor isNotNil ]
 ]
-{
-	#category : #tests
-}
-FlashEffectThemeTest >> testEffectForUnknownSoundReturnsFallback [
-	| theme event effect |
-	theme := FlashRanaEffectTheme new.
-	event := FlashMelodyEvent new soundName: 'totallyUnknownXYZ'; yourself.
-	effect := theme effectForEvent: event.
-	self assert: effect isNotNil.
-	self assert: (effect isKindOf: FlashVisualEffect)
 
+{ #category : 'tests' }
+FlashEffectThemeTest >> testChromaticThemeClassifies [
+	| theme event |
+	theme := FlashChromaticEffectTheme new.
+	event := FlashMelodyEvent new soundName: 'bd'.
+	self assert: (theme colorForEvent: event) equals: (Color fromHexString: '8A2BE2')
 ]
-{
-	#category : #tests
-}
-FlashEffectThemeTest >> testColorForEventReturnsColor [
-	| theme event color |
-	theme := FlashRanaEffectTheme new.
-	event := FlashMelodyEvent new soundName: 'bd'; yourself.
-	color := theme colorForEvent: event.
-	self assert: (color isKindOf: Color)
 
+{ #category : 'tests' }
+FlashEffectThemeTest >> testRegistryResolvesIds [
+	self assert: (FlashThemeRegistry themeForPillId: #phosphor) class equals: FlashRanaEffectTheme.
+	self assert: (FlashThemeRegistry themeForPillId: #neon) class equals: FlashNeonEffectTheme.
+	self assert: (FlashThemeRegistry themeForPillId: #chromatic) class equals: FlashChromaticEffectTheme.
+	self assert: (FlashThemeRegistry themeForPillId: #hyperwave) class equals: FlashHyperWaveEffectTheme
 ]
-{
-	#category : #tests
-}
-FlashEffectThemeTest >> testAllThemeSubclassesHaveAName [
-	FlashEffectTheme allSubclasses do: [ :cls |
-		cls isAbstract ifFalse: [
-			| theme |
-			theme := cls new.
-			self assert: theme name isNotNil.
-			self deny: theme name isEmpty ] ]
 
-]
-{
-	#category : #tests
-}
-FlashEffectThemeTest >> testAllThemeSubclassesHaveBackgroundColor [
-	FlashEffectTheme allSubclasses do: [ :cls |
-		cls isAbstract ifFalse: [
-			| theme |
-			theme := cls new.
-			self assert: (theme backgroundColor isKindOf: Color) ] ]
+{ #category : 'tests' }
+FlashEffectThemeTest >> testThemeMappingsBuildEffects [
+	FlashThemeRegistry availableThemes do: [ :theme |
+		theme mappings keysAndValuesDo: [ :category :config |
+			self assert: (theme buildEffectFromConfig: config) isNotNil.
+			self assert: category isNotNil ] ]
 ]

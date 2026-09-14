@@ -120,3 +120,35 @@ FlashMelodyEventTest >> testFromSequencerFactory [
 	self assert: event sequencerKey equals: #testSeq.
 	self assert: event noteValue equals: 60
 ]
+{
+	#category : #tests
+}
+FlashMelodyEventTest >> testFreqHzAndNoteName [
+	| event |
+	event := FlashMelodyEvent new noteValue: 60.
+	self assert: (event freqHz closeTo: 261.63 precision: 0.02).
+	self assert: event noteName equals: 'C4'.
+	event noteValue: 51.
+	self assert: event noteName equals: 'Eb3'
+]
+{
+	#category : #tests
+}
+FlashMelodyEventTest >> testTriggerKind [
+	| event |
+	event := FlashMelodyEvent new
+		soundName: 'bd';
+		noteValue: 36;
+		yourself.
+	self assert: event triggerKind equals: #drum.
+	event := FlashMelodyEvent new
+		soundName: 'bass';
+		noteValue: 36;
+		yourself.
+	self assert: event triggerKind equals: #bass.
+	event := FlashMelodyEvent new
+		soundName: 'superpiano';
+		noteValue: 60;
+		yourself.
+	self assert: event triggerKind equals: #synth
+]

@@ -70,6 +70,6 @@ FlashLiveEditorTest >> testSetEffectTheme [
 	theme := FlashRanaEffectTheme new.
 	liveEditor effectTheme: theme.
 	self assert: liveEditor effectTheme equals: theme.
-	self assert: liveEditor background paint color equals: Color black
+	self assert: liveEditor background paint color equals: theme backgroundColor
 
 ]

@@ -44,7 +44,7 @@ FlashThemeEditorElementTest >> testPreviewEffectTriggersAnimationInPreviewArea [
 	themeEditor := FlashThemeEditorElement new.
 	themeEditor currentTheme: FlashRanaEffectTheme new.
 	themeEditor previewEffectForCategory: #drum.
-	self assert: themeEditor previewArea children isNotEmpty
+	self assert: (themeEditor previewArea background paint color closeTo: ((Color fromHexString: '00FF41') alpha: 0.4))
 
 ]
 {

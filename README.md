@@ -17,6 +17,31 @@ Metacello new
 
 ## Quick Start
 
+### Open the full live-coding workspace
+
+```smalltalk
+window := FlashWorkspaceWindow onWorkspace: FlashWorkspace new.
+window openInSpace.
+```
+
+The workspace assembles the live editor (CodeMirror-style), transport bar (play/tap/panic/BPM), a 16-step sequencer matrix (kick/acid/hihat), the particle canvas, an oscilloscope, a live event stream, and a synth panel.
+
+### Open the performance Stage
+
+```smalltalk
+controller := FlashStageController new.
+controller initializeStage.
+controller screen openInSpace.
+```
+
+The stage is a full-screen performance mode with 4 visual presets (Phosphor CRT, Neon Pulse, Cyber Grid, Acid Storm), a background canvas with scanlines and music-reactive particle bursts, a floating HUD editor, a bottom dock (mini matrix, transport, VU meters, spark/burst/panic controls), and a zen mode that hides the chrome.
+
+```smalltalk
+controller toggleZen.           "hide HUD + dock"
+controller activatePreset: #acid.
+controller advanceClock.        "drives particles + matrix from the sequencer"
+```
+
 ### Open the editor standalone
 
 ```smalltalk
@@ -202,15 +227,22 @@ Coypu (music engine)           Flash (visuals)
 |---|---|
 | `Flash-Core` | `FlashLiveEditor`, `FlashEditorCodeEvaluator`, `FlashEditorCompletionController` |
 | `Flash-Events` | `FlashMelodyEvent`, `FlashEditorEventListener`, Coypu extension methods |
-| `Flash-Effects` | `FlashVisualEffect` + 6 concrete effects |
+| `Flash-Effects` | `FlashVisualEffect` + 6 concrete effects, `FlashScanlineOverlay` |
 | `Flash-Themes` | `FlashEffectTheme`, `FlashRanaEffectTheme`, `FlashNeonEffectTheme` |
 | `Flash-Themes-Editor` | `FlashThemeEditorElement` (preferences UI) |
+| `Flash-Support` | `FlashTransportClock`, `FlashPitchParser`, `FlashSequencerSnapshot`, demo patterns |
+| `Flash-Particles` | `FlashParticle`/`FlashParticleEngine` + `FlashParticleCanvasElement` |
+| `Flash-Workspace` | `FlashWorkspace` model, `FlashWorkspaceWindow`, transport, matrix, scope, stream, synth panel, editor window |
+| `Flash-Stage` | `FlashStageController`, `FlashStageScreen`, canvas, HUD editor, dock, zen controller, 4 presets |
 | `Flash-Tests-Core` | Editor and evaluator tests |
 | `Flash-Tests-Events` | Event and listener tests |
 | `Flash-Tests-Effects` | Visual effect tests |
 | `Flash-Tests-Themes` | Theme and theme editor tests |
+| `Flash-Tests-Support` | Clock, pitch, snapshot tests |
+| `Flash-Tests-Particles` | Particle engine and canvas tests |
+| `Flash-Tests-Workspace` | Workspace model and element tests |
+| `Flash-Tests-Stage` | Stage controller, presets, zen tests |
 | `Flash-Tests-Integration` | Coypu integration tests |
-| `Flash` | Umbrella package for all components |
 
 Dependency graph:
 
@@ -219,9 +251,9 @@ Flash-Core ────┬── Flash-Events ─── Coypu
                ├── Flash-Effects
                └── Flash-Themes ──┬── Flash-Effects
                                   └── Flash-Events
-Flash-Editor ── Flash-Core + Flash-Events + Flash-Effects + Flash-Themes
-Flash-Themes-Editor ── Flash-Themes + Flash-Editor
-Flash ── all of the above
+Flash-Particles ── Flash-Support + Flash-Events + Flash-Effects + Bloc
+Flash-Workspace ── Flash-Core + Flash-Particles + Flash-Themes-Editor + Bloc/Album
+Flash-Stage ───── Flash-Workspace + Flash-Particles + Flash-Effects + Flash-Themes
 ```
 
 ## Visual Effects
@@ -339,16 +371,21 @@ The package adds three extension methods to Coypu classes (no Coypu source modif
 
 ## Running Tests
 
+With the partial packages loaded, test classes are: Flash-Tests-Support, -Events, -Effects, -Themes, -Core, -Particles, -Workspace, -Stage, -Integration.
+
 ```smalltalk
 suite := TestSuite named: 'Flash'.
-#('Flash-Core' 'Flash-Events' 'Flash-Effects' 'Flash-Themes' 'Flash-Tests-Integration')
+#('Flash-Tests-Support' 'Flash-Tests-Events' 'Flash-Tests-Effects'
+  'Flash-Tests-Themes' 'Flash-Tests-Themes' 'Flash-Tests-Core'
+  'Flash-Tests-Particles' 'Flash-Tests-Workspace' 'Flash-Tests-Stage'
+  'Flash-Tests-Integration')
   do: [ :pkg |
     suite addTests: ((PackageOrganizer default packageNamed: pkg) definedClasses
       select: [ :c | c isTestCase ] thenCollect: [ :c | c buildSuite ]) ].
 TestRunner new runSuite: suite.
 ```
 
-Or run individual test classes:
+Or run individual test classes, for example:
 
 ```smalltalk
 (FlashLiveEditorTest selector: #testInitializationCreatesAlbEditor) run.
@@ -358,27 +395,49 @@ Or run individual test classes:
 
 ## Test Summary
 
+The suite is verified green (38 test classes, 168 tests) on a fresh Pharo 12 image loaded from the Metacello baseline.
+
 | Test Class | # Tests | Component |
 |---|---|---|
 | `FlashLiveEditorTest` | 7 | Editor init, effects, cleanup |
 | `FlashEditorCodeEvaluatorTest` | 6 | DoIt, PrintIt, contexts, errors |
 | `FlashEditorCompletionControllerTest` | 4 | Popup, suggestions |
-| `FlashMelodyEventTest` | 9 | Properties, categories, factory |
-| `FlashEditorEventListenerTest` | 5 | Announcer, start/stop, subscriptions |
+| `FlashEditorEventListenerTest` | 5 | Announcer, subscriptions |
+| `FlashMelodyEventTest` | 11 | Properties, categories, factory, pitch |
 | `FlashVisualEffectTest` | 4 | Duration, intensity, protocol |
 | `FlashFlashEffectTest` | 3 | Background, color, duration |
-| `FlashGlowEffectTest` | 2 | Border, duration comparison |
-| `FlashPulseEffectTest` | 2 | Transform, scale factor |
+| `FlashGlowEffectTest` | 2 | Border, duration |
+| `FlashPulseEffectTest` | 2 | Transform, scale |
 | `FlashWaveEffectTest` | 2 | Sequential, displacement |
 | `FlashColorShiftEffectTest` | 3 | Color shift, restore, blend |
 | `FlashBorderFlashEffectTest` | 2 | Border, width proportion |
-| `FlashEffectThemeTest` | 5 | Lookup, fallback, colors |
+| `FlashScanlineOverlayTest` | 2 | Bloc element, mouse transparency |
+| `FlashEffectThemeTest` | 4 | Lookup, fallback, colors |
 | `FlashRanaEffectThemeTest` | 7 | Mappings, colors, categories |
 | `FlashNeonEffectThemeTest` | 4 | Mappings, colors |
-| `FlashThemeEditorElementTest` | 5 | Sub-elements, themes, STON |
+| `FlashThemeEditorElementTest` | 5 | Sub-elements, themes, STON, animations |
+| `FlashThemePaletteTest` | 3 | Surface monotonicity |
+| `FlashTransportClockTest` | 7 | Swing, tap tempo, payload duration |
+| `FlashPitchParserTest` | 5 | Note names, frequencies, black keys |
+| `FlashDemoPatternsTest` | 3 | Sixteen-step demo patterns |
+| `FlashSequencerSnapshotTest` | 3 | Lane/track round-trip |
+| `FlashSoundEventLogTest` | 3 | Add/format, clear, ring buffer |
+| `FlashCoypuAdapterTest` | 2 | Snapshot skips non-Coypu objects |
+| `FlashParticleTest` | 4 | Particle lifecycle |
+| `FlashParticleEngineTest` | 6 | Shockwave/spark/shower spawns |
+| `FlashParticleCanvasElementTest` | 6 | Canvas assembly, reset, label |
+| `FlashWorkspaceTest` | 7 | Lane mapping, cycle beats, panic |
+| `FlashWorkspaceElementTest` | 8 | Window assembles, advance clock drives UI |
+| `FlashOscilloscopeTest` | 5 | Ring buffer + element bars |
+| `FlashEventStreamElementTest` | 3 | Row formatting |
+| `FlashSynthPanelTest` | 5 | Model clamps, +/- steppers |
+| `FlashStagePresentationTest` | 4 | Presets, apply, fallback |
+| `FlashZenControllerTest` | 4 | Enter/exit/toggle zen |
+| `FlashStageControllerTest` | 4 | Screen assembly, advance, presets |
+| `FlashStageElementTest` | 5 | Canvas/HUD/dock/screen parts |
 | `FlashCoypuIntegrationTest` | 4 | Extension methods, events |
 | `FlashEditorWorkflowTest` | 12 | End-to-end editor workflow |
-| **Total** | **84** | |
+| **Total** | **168** | 38 test classes, all green |
 
 ## License
 

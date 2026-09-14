@@ -220,3 +220,29 @@ FlashMelodyEvent >> velocity: aFloat [
 	velocity := aFloat
 
 ]
+
+{ #category : 'convenience' }
+FlashMelodyEvent >> freqHz [
+	noteValue ifNil: [ ^ 0.0 ].
+	^ FlashPitchParser frequencyForMidi: noteValue
+]
+
+{ #category : 'convenience' }
+FlashMelodyEvent >> noteName [
+	noteValue ifNil: [ ^ '--' ].
+	^ FlashPitchParser nameForMidi: noteValue
+]
+
+{ #category : 'classification' }
+FlashMelodyEvent >> pitchIndex [
+	| index |
+	index := (noteValue ifNil: [ 60 ]) - 36.
+	^ ((index max: 0) min: 48) / 48.0
+]
+
+{ #category : 'convenience' }
+FlashMelodyEvent >> triggerKind [
+	^ self isPercussive
+		ifTrue: [ #drum ]
+		ifFalse: [ (self soundCategory = #bass) ifTrue: [ #bass ] ifFalse: [ #synth ] ]
+]

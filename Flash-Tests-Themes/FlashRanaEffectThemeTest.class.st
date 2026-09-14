@@ -14,8 +14,8 @@ FlashRanaEffectThemeTest >> testNameIsRana [
 {
 	#category : #tests
 }
-FlashRanaEffectThemeTest >> testBackgroundIsBlack [
-	self assert: FlashRanaEffectTheme new backgroundColor equals: Color black
+FlashRanaEffectThemeTest >> testBackgroundIsDeepPhosphor [
+	self assert: FlashRanaEffectTheme new backgroundColor equals: (Color fromHexString: '05231E')
 
 ]
 {
@@ -24,7 +24,7 @@ FlashRanaEffectThemeTest >> testBackgroundIsBlack [
 FlashRanaEffectThemeTest >> testTextColorIsPhosphorGreen [
 	| theme |
 	theme := FlashRanaEffectTheme new.
-	self assert: theme textColor equals: (Color fromHexString: '00FF41')
+	self assert: theme textColor equals: (Color fromHexString: '60FF99')
 
 ]
 {

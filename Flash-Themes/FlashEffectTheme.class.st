@@ -7,7 +7,8 @@ Class {
 		'defaultEffect',
 		'backgroundColor',
 		'textColor',
-		'accentColors'
+		'accentColors',
+		'pillId'
 	],
 	#category : 'Flash-Themes',
 	#package : 'Flash-Themes'
@@ -27,15 +28,13 @@ FlashEffectTheme >> accentColors: aDictionary [
 
 { #category : 'api' }
 FlashEffectTheme >> applyToEditor: aFlashLiveEditor [
+	| text |
 
 	aFlashLiveEditor background: backgroundColor.
 	aFlashLiveEditor editor background: backgroundColor.
 	textColor ifNotNil: [
-		aFlashLiveEditor editor
-			selectionColor: (textColor alpha: 0.3).
-		aFlashLiveEditor editor cursor
-			ifNotNil: [ :c | c color: textColor ].
-		| text |
+		(aFlashLiveEditor editor respondsTo: #cursorColor:)
+			ifTrue: [ aFlashLiveEditor editor cursorColor: textColor ].
 		text := aFlashLiveEditor editor text.
 		text isEmpty
 			ifTrue: [
@@ -139,6 +138,17 @@ FlashEffectTheme >> name [
 { #category : 'accessing' }
 FlashEffectTheme >> name: aString [
 	name := aString
+
+]
+
+{ #category : 'accessing' }
+FlashEffectTheme >> pillId [
+	^ pillId
+]
+
+{ #category : 'accessing' }
+FlashEffectTheme >> pillId: anObject [
+	pillId := anObject
 
 ]
 

@@ -15,14 +15,14 @@ FlashNeonEffectThemeTest >> testNameIsNeon [
 	#category : #tests
 }
 FlashNeonEffectThemeTest >> testBackgroundIsDeepIndigo [
-	self assert: FlashNeonEffectTheme new backgroundColor equals: (Color fromHexString: '0D0221')
+	self assert: FlashNeonEffectTheme new backgroundColor equals: (Color fromHexString: '150A18')
 
 ]
 {
 	#category : #tests
 }
 FlashNeonEffectThemeTest >> testTextColorIsCyan [
-	self assert: FlashNeonEffectTheme new textColor equals: (Color fromHexString: '00F5FF')
+	self assert: FlashNeonEffectTheme new textColor equals: (Color fromHexString: 'FF4A8D')
 
 ]
 {

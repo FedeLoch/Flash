@@ -1,1 +1,1 @@
-Package { #name : #'Flash-Tests-Themes' }
+Package { #name : 'Flash-Tests-Themes' }

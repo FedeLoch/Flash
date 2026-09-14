@@ -9,8 +9,9 @@ Class {
 FlashNeonEffectTheme >> initialize [
 	super initialize.
 	name := 'Neon'.
-	backgroundColor := Color fromHexString: '0D0221'.
-	textColor := Color fromHexString: '00F5FF'.
+	pillId := #neon.
+	backgroundColor := Color fromHexString: '150A18'.
+	textColor := Color fromHexString: 'FF4A8D'.
 	self initializeMappings.
 	self initializeAccentColors
 

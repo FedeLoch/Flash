@@ -133,10 +133,11 @@ FlashThemeEditorElement >> previewEffectForCategory: aSymbol [
 	| event effect |
 	currentTheme ifNil: [ ^ self ].
 	event := FlashMelodyEvent new
-		soundName: aSymbol;
 		velocity: 0.8;
 		yourself.
+	event forceSoundCategory: aSymbol.
 	effect := currentTheme effectForEvent: event.
 	effect ifNotNil: [
-		effect applyTo: previewArea withEvent: event ]
+		effect applyTo: previewArea withEvent: event.
+		previewArea background: (effect color alpha: 0.4) ]
 ]
